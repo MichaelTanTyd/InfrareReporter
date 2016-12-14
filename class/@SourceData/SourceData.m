@@ -3,13 +3,13 @@ classdef SourceData < handle
     %   Detailed explanation goes here
     
     properties
-        infrare_path %热像仪导出文件路径及名称
-        sensor_path  %外部传感器导出文件路径及名称
+        infrare_path % 热像仪导出文件路径及名称
+        sensor_path  % 外部传感器导出文件路径及名称
         
-        infrarethemal_temp %红外温度数据
-        thermocouple_temp  %热电偶温度数据
-        pressure %微负压数据
-        hight %料位高度数据
+        infrarethemal_temp % 红外温度数据
+        thermocouple_temp  % 热电偶温度数据
+        pressure % 微负压数据
+        hight % 料位高度数据
         
     end
     
