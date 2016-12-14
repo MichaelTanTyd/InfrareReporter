@@ -9,7 +9,7 @@ close all
 
 allData = xlsread('test_data.xlsx');
 [M, N] = size(allData); % M为列坐标，N为横坐标
-%% 温度变化和时间的关系
+%% 作图：温度变化和时间的关系
 for index = 1:M
     plot(allData(index,3:end)); hold on; grid on;
 end
