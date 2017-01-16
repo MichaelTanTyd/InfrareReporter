@@ -1,3 +1,0 @@
-一。如何将内容pull下来
-remote → fetch from → origin
-密码：chenyuyongxxxxxx
