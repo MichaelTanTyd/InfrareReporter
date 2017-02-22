@@ -22,7 +22,7 @@ function varargout = InfrareMainFrame(varargin)
 
 % Edit the above text to modify the response to help InfrareMainFrame
 
-% Last Modified by GUIDE v2.5 28-Dec-2016 22:21:26
+% Last Modified by GUIDE v2.5 22-Feb-2017 08:46:07
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -71,94 +71,7 @@ function varargout = InfrareMainFrame_OutputFcn(hObject, eventdata, handles)
 
 % Get default command line output from handles structure
 varargout{1} = handles.output;
-
-
-% --------------------------------------------------------------------
-function menu_file_Callback(hObject, eventdata, handles)
-% hObject    handle to menu_file (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-
-
-% --------------------------------------------------------------------
-function menu_file_open_Callback(hObject, eventdata, handles)
-% hObject    handle to menu_file_open (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-
-
-% --------------------------------------------------------------------
-function menu_file_save_Callback(hObject, eventdata, handles)
-% hObject    handle to menu_file_save (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-
-
-% --------------------------------------------------------------------
-function menu_help_Callback(hObject, eventdata, handles)
-% hObject    handle to menu_help (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-
-
-% --------------------------------------------------------------------
-function menu_help_web_Callback(hObject, eventdata, handles)
-% hObject    handle to menu_help_web (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-
-
-% --------------------------------------------------------------------
-function menu_help_about_Callback(hObject, eventdata, handles)
-% hObject    handle to menu_help_about (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-
-
-% --- Executes on selection change in listbox1.
-function listbox1_Callback(hObject, eventdata, handles)
-% hObject    handle to listbox1 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-
-% Hints: contents = cellstr(get(hObject,'String')) returns listbox1 contents as cell array
-%        contents{get(hObject,'Value')} returns selected item from listbox1
-
-
-% --- Executes during object creation, after setting all properties.
-function listbox1_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to listbox1 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    empty - handles not created until after all CreateFcns called
-
-% Hint: listbox controls usually have a white background on Windows.
-%       See ISPC and COMPUTER.
-if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
-    set(hObject,'BackgroundColor','white');
-end
-
-
-% --- Executes on selection change in listbox2.
-function listbox2_Callback(hObject, eventdata, handles)
-% hObject    handle to listbox2 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-
-% Hints: contents = cellstr(get(hObject,'String')) returns listbox2 contents as cell array
-%        contents{get(hObject,'Value')} returns selected item from listbox2
-
-
-% --- Executes during object creation, after setting all properties.
-function listbox2_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to listbox2 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    empty - handles not created until after all CreateFcns called
-
-% Hint: listbox controls usually have a white background on Windows.
-%       See ISPC and COMPUTER.
-if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
-    set(hObject,'BackgroundColor','white');
-end
+set(gcf,'menu','figure');
 
 
 % --- Executes on button press in pushbutton1.
@@ -166,6 +79,46 @@ function pushbutton1_Callback(hObject, eventdata, handles)
 % hObject    handle to pushbutton1 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+% 文件打开图 %跳出文件打开界面
+clear
+[filename, pathname] = uigetfile( ...
+{  '*.*',  'All Files (*.*)'}, ...
+   'Pick a file');
+% {'*.m;*.fig;*.mat;*.slx;*.mdl',...
+%  'MATLAB Files (*.m,*.fig,*.mat,*.slx,*.mdl)';
+%    '*.m',  'Code files (*.m)'; ...
+%    '*.fig','Figures (*.fig)'; ...
+%    '*.mat','MAT-files (*.mat)'; ...
+%    '*.mdl;*.slx','Models (*.slx, *.mdl)'; ...
+%    '*.*',  'All Files (*.*)'}, ...
+%    'Pick a file');
+
+wh = which(filename);
+if exist(filename, 'file') == 2
+    fprintf('Opening in MATLAB Editor: %s\n', filename);
+%     edit(filename);
+elseif ~isempty(wh)
+    fprintf('Opening in MATLAB Editor: %s\n', wh);
+    edit(wh);
+else
+    warning('MATLAB:fileNotFound', ...
+        'File was not found: %s', filename);
+end
+
+fulfile = [ pathname filename];
+global allData
+allData = xlsread(fulfile);
+
+[M, N] = size(allData); % M为列坐标，N为横坐标
+%% 温度变化和时间的关系
+for index = 1:M
+    plot(allData(index,4:end)); hold on; grid on;
+end
+legendTxt = num2str(allData(:,1));
+legend(legendTxt,0)
+xlabel('位置值 Pix ');
+ylabel('温度值 ℃');
+title('不同时间段的位置-温度关系图')
 
 
 % --- Executes on button press in pushbutton2.
@@ -173,3 +126,86 @@ function pushbutton2_Callback(hObject, eventdata, handles)
 % hObject    handle to pushbutton2 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+
+
+% --- Executes on button press in pushbutton3.
+function pushbutton3_Callback(hObject, eventdata, handles)
+% hObject    handle to pushbutton3 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+global allData
+method = questdlg('要清除上一幅图像吗?','提示','Yes','No','No');
+switch lower(method)
+    case 'yes'
+        clear figure
+    case 'no'
+end
+% 显示图像
+[M, N] = size(allData); % M为列坐标，N为横坐标
+for index = 1:M
+    plot(allData(index,4:end)); hold on; grid on;
+end
+legendTxt = num2str(allData(:,1));
+legend(legendTxt,0)
+xlabel('位置值 Pix ');
+ylabel('温度值 ℃');
+title('不同时间段的位置-温度关系图')
+
+% --- Executes on button press in pushbutton4.
+function pushbutton4_Callback(hObject, eventdata, handles)
+% hObject    handle to pushbutton4 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+% 高度变化图
+global allData
+method = questdlg('要清除上一幅图像吗?','提示','Yes','No','No');
+switch lower(method)
+    case 'yes'
+        clear figure
+    case 'no'
+end
+[M, N] = size(allData); % M为列坐标，N为横坐标
+%% 时间高度关系
+HigChangeData = [];
+for index = 1:M
+     [value, hight] = max(allData(index,4:end));
+     HigChangeData(end+1,1) = allData(index,1);
+     HigChangeData (end,2:3) = [value, hight]; 
+end
+for index = 1:M
+    plot(HigChangeData(index,2),HigChangeData(index,3),'b.-');hold on
+end
+% legend(legendTxt,0)
+xlabel('时间 ms');
+ylabel('高度 Pix');
+title([num2str(allData(1,1)) '时间高度关系图'])
+
+
+
+
+% --- Executes on button press in pushbutton5.
+function pushbutton5_Callback(hObject, eventdata, handles)
+% hObject    handle to pushbutton5 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+global allData
+method = questdlg('要清除上一幅图像吗?','提示','Yes','No','No');
+switch lower(method)
+    case 'yes'
+        clear figure
+    case 'no'
+end
+
+% --- Executes on button press in pushbutton6.
+function pushbutton6_Callback(hObject, eventdata, handles)
+% hObject    handle to pushbutton6 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+global allData
+method = questdlg('要清除上一幅图像吗?','提示','Yes','No','No');
+switch lower(method)
+    case 'yes'
+        clear figure
+    case 'no'
+end
