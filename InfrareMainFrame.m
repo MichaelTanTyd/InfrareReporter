@@ -54,7 +54,11 @@ function InfrareMainFrame_OpeningFcn(hObject, eventdata, handles, varargin)
 
 % Choose default command line output for InfrareMainFrame
 handles.output = hObject;
-
+% add all the sub path to workspace
+addpath(genpath(pwd));
+% change the logo of figure
+javaFrame = get(hObject, 'JavaFrame');
+javaFrame.setFigureIcon(javax.swing.ImageIcon('.\res\BYME_LOGO.jpg'));
 % Update handles structure
 guidata(hObject, handles);
 
