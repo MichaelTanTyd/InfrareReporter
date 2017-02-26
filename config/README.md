@@ -5,13 +5,13 @@
 ### Data Process Related###
 below is a example ,pls append it future.
 
--  **defaultStep**=*2*
+-  **defaultStep**=2
 
--  **savePath**=*'D:\Infrare\reporter\'*
+-  **savePath**='D:\Infrare\reporter\'
 
--  **defaultOpenPath**=*'D:\Infrare\sourceData\'*
+-  **defaultOpenPath**='D:\Infrare\sourceData\'
 
--  **others**=*'will be appended'*
+-  **others**='will be appended'
 
 
 
