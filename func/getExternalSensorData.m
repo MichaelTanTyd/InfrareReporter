@@ -1,6 +1,7 @@
 function [ extSenData ] = getExternalSensorData( filepath )
-%UNTITLED 此处显示有关此函数的摘要
-%   此处显示详细说明
+%   获取外部传感器的数据
+%   filepath:外部数据路径+名称
+%   可以根据需要添加输入，输出参数
 
 disp('get external sensor data')
 disp(filepath)

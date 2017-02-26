@@ -59,11 +59,14 @@ addpath(genpath(pwd));
 % change the logo of figure
 javaFrame = get(hObject, 'JavaFrame');
 javaFrame.setFigureIcon(javax.swing.ImageIcon('.\res\BYME_LOGO.jpg'));
+set(gcf,'menu','figure');
+%加载config.mat中的key-value到当前GUI中的appdata中
+initConfigAppData(hObject,'.\config\config.mat')
 % Update handles structure
 guidata(hObject, handles);
 
 % UIWAIT makes InfrareMainFrame wait for user response (see UIRESUME)
-% uiwait(handles.figure1);
+% uiwait(handles.figure1);%% uiresume 配对使用 UIWAIT
 
 
 % --- Outputs from this function are returned to the command line.
@@ -74,8 +77,8 @@ function varargout = InfrareMainFrame_OutputFcn(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 
 % Get default command line output from handles structure
-varargout{1} = handles.output;
-set(gcf,'menu','figure');
+varargout{1} = handles.output
+% set(gcf,'menu','figure');
 
 
 % --- Executes on button press in btn_openfile.
@@ -130,7 +133,10 @@ function btn_generate_reporter_Callback(hObject, eventdata, handles)
 % hObject    handle to btn_generate_reporter (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-
+%% the code below are used for test ,delete it future
+configData=getappdata(gcf)%get all the appdata of gcf
+setappdata(gcf,'defaultStep',2) %set 'defaultStep' to 2
+resetConfigAppData(gcf,'.\config\config.mat') % update config.mat
 
 % --- Executes on button press in btn_temperature.
 function btn_temperature_Callback(hObject, eventdata, handles)
