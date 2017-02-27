@@ -61,11 +61,23 @@ already implemented
 ### Drawing figure Related ###
 for the detai input and out param, pls see source code definition.
 
-- `function [ ] =XXX( handles, configPath)`
+- `function [ ] = drawTemperatureVsTime(handle,TG ,opt )`
 
 not implemented
 
-- `function [config] = XXXX( handles, configPath)`
+- `function [ ] = drawPressureVsTime(handle,Pre_H_t ,opt )`
+
+not implemented
+
+- `function [ ] = drawtTemperatureGradient(handle,TG ,opt )`
+
+not implemented
+
+- `function [ ] = drawtHeightOfLRAVsTime(handle,LRA_H_t ,opt )`
+
+not implemented
+
+- `function [ ] = drawtHeightOfTopSurfaceVsTime(handle,TS_H_t ,opt )`
 
 not implemented
 
