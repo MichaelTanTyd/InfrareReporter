@@ -57,6 +57,7 @@ handles.output = hObject;
 % add all the sub path to workspace
 addpath(genpath(pwd));
 % change the logo of figure
+warning off;
 javaFrame = get(hObject, 'JavaFrame');
 javaFrame.setFigureIcon(javax.swing.ImageIcon('.\res\BYME_LOGO.jpg'));
 set(gcf,'menu','figure');
