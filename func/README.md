@@ -19,7 +19,18 @@ not implemented
 
 not implemented
 
-- `others will be appended`
+- `function [ Temp_H_t ] = getTemperatureVsTime( allData ,height )`
+
+not implemented
+
+- `function [ Pre_H_t ] = getPressureVsTime( allData ,height )`
+
+not implemented
+
+- `function [ LRA_H_t ] = getHeightOfLRAVsTime( allData)`
+
+not implemented , **LRA** means **Latosolic Red Area**(赤红带)
+
 
 
 
