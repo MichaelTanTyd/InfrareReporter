@@ -22,7 +22,7 @@ function varargout = InfrareMainFrame(varargin)
 
 % Edit the above text to modify the response to help InfrareMainFrame
 
-% Last Modified by GUIDE v2.5 22-Feb-2017 08:46:07
+% Last Modified by GUIDE v2.5 22-Feb-2017 22:06:24
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -54,12 +54,20 @@ function InfrareMainFrame_OpeningFcn(hObject, eventdata, handles, varargin)
 
 % Choose default command line output for InfrareMainFrame
 handles.output = hObject;
-
+% add all the sub path to workspace
+addpath(genpath(pwd));
+% change the logo of figure
+warning off;
+javaFrame = get(hObject, 'JavaFrame');
+javaFrame.setFigureIcon(javax.swing.ImageIcon('.\res\BYME_LOGO.jpg'));
+set(gcf,'menu','figure');
+%加载config.mat中的key-value到当前GUI中的appdata中
+initConfigAppData(hObject,'.\config\config.mat')
 % Update handles structure
 guidata(hObject, handles);
 
 % UIWAIT makes InfrareMainFrame wait for user response (see UIRESUME)
-% uiwait(handles.figure1);
+% uiwait(handles.figure1);%% uiresume 配对使用 UIWAIT
 
 
 % --- Outputs from this function are returned to the command line.
@@ -70,13 +78,13 @@ function varargout = InfrareMainFrame_OutputFcn(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 
 % Get default command line output from handles structure
-varargout{1} = handles.output;
-set(gcf,'menu','figure');
+varargout{1} = handles.output
+% set(gcf,'menu','figure');
 
 
-% --- Executes on button press in pushbutton1.
-function pushbutton1_Callback(hObject, eventdata, handles)
-% hObject    handle to pushbutton1 (see GCBO)
+% --- Executes on button press in btn_openfile.
+function btn_openfile_Callback(hObject, eventdata, handles)
+% hObject    handle to btn_openfile (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 % 文件打开图 %跳出文件打开界面
@@ -121,16 +129,19 @@ ylabel('温度值 ℃');
 title('不同时间段的位置-温度关系图')
 
 
-% --- Executes on button press in pushbutton2.
-function pushbutton2_Callback(hObject, eventdata, handles)
-% hObject    handle to pushbutton2 (see GCBO)
+% --- Executes on button press in btn_generate_reporter.
+function btn_generate_reporter_Callback(hObject, eventdata, handles)
+% hObject    handle to btn_generate_reporter (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+%% the code below are used for test ,delete it future
+configData=getappdata(gcf)%get all the appdata of gcf
+setappdata(gcf,'defaultStep',2) %set 'defaultStep' to 2
+resetConfigAppData(gcf,'.\config\config.mat') % update config.mat
 
-
-% --- Executes on button press in pushbutton3.
-function pushbutton3_Callback(hObject, eventdata, handles)
-% hObject    handle to pushbutton3 (see GCBO)
+% --- Executes on button press in btn_temperature.
+function btn_temperature_Callback(hObject, eventdata, handles)
+% hObject    handle to btn_temperature (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
@@ -152,9 +163,9 @@ xlabel('位置值 Pix ');
 ylabel('温度值 ℃');
 title('不同时间段的位置-温度关系图')
 
-% --- Executes on button press in pushbutton4.
-function pushbutton4_Callback(hObject, eventdata, handles)
-% hObject    handle to pushbutton4 (see GCBO)
+% --- Executes on button press in btn_height.
+function btn_height_Callback(hObject, eventdata, handles)
+% hObject    handle to btn_height (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 % 高度变化图
@@ -184,9 +195,9 @@ title([num2str(allData(1,1)) '时间高度关系图'])
 
 
 
-% --- Executes on button press in pushbutton5.
-function pushbutton5_Callback(hObject, eventdata, handles)
-% hObject    handle to pushbutton5 (see GCBO)
+% --- Executes on button press in btn_shrinkage.
+function btn_shrinkage_Callback(hObject, eventdata, handles)
+% hObject    handle to btn_shrinkage (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 global allData
@@ -197,9 +208,9 @@ switch lower(method)
     case 'no'
 end
 
-% --- Executes on button press in pushbutton6.
-function pushbutton6_Callback(hObject, eventdata, handles)
-% hObject    handle to pushbutton6 (see GCBO)
+% --- Executes on button press in btn_ladder.
+function btn_ladder_Callback(hObject, eventdata, handles)
+% hObject    handle to btn_ladder (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 global allData
