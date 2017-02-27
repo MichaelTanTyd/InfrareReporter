@@ -31,8 +31,21 @@ not implemented
 
 not implemented , **LRA** means **Latosolic Red Area**(赤红带)
 
+- `function [ TG ] = getTemperatureGradient(allData , timeVector)`
 
+not implemented 
 
+- `function [ TS_H_t ] = getHeightOfTopSurfaceVsTime( allData  )`
+
+not implemented 
+
+- `function [ PX ] = heightToPixel(imgAdapter , height)`
+
+not implemented 
+
+- `function [ HG ] = pixelToHeight(imgAdapter , pixel)`
+
+not implemented 
 
 ### GUI Operate Related ###
 for the detai input and out param, pls see source code definition.
@@ -44,5 +57,16 @@ already implemented
 - `function [config] = resetConfigAppData( handles, configPath)`
 
 already implemented
+
+### Drawing figure Related ###
+for the detai input and out param, pls see source code definition.
+
+- `function [ ] =XXX( handles, configPath)`
+
+not implemented
+
+- `function [config] = XXXX( handles, configPath)`
+
+not implemented
 
 
