@@ -22,7 +22,7 @@ function varargout = InfrareMainFrame(varargin)
 
 % Edit the above text to modify the response to help InfrareMainFrame
 
-% Last Modified by GUIDE v2.5 28-Feb-2017 09:38:58
+% Last Modified by GUIDE v2.5 28-Feb-2017 21:15:18
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -63,8 +63,8 @@ javaFrame.setFigureIcon(javax.swing.ImageIcon('.\res\BYME_LOGO.jpg'));
 set(gcf,'menu','figure');
 %加载config.mat中的key-value到当前GUI中的appdata中
 initConfigAppData(hObject,'.\config\config.mat')
-
-handles.advanceConfig=0;
+% 从appdata中获取默认绘图选项配置
+handles.chkbox_one2six_value=getappdata(gcf,'defaultDrawingOrder')
 % Update handles structure
 guidata(hObject, handles);
 
@@ -81,7 +81,15 @@ function varargout = InfrareMainFrame_OutputFcn(hObject, eventdata, handles)
 
 % Get default command line output from handles structure
 varargout{1} = handles.output
-% set(gcf,'menu','figure');
+%% 设置默认的绘图选项
+set(handles.chkbx_first,'Value',handles.chkbox_one2six_value(1))
+set(handles.chkbx_second,'Value',handles.chkbox_one2six_value(2))
+set(handles.chkbx_third,'Value',handles.chkbox_one2six_value(3))
+set(handles.chkbx_fourth,'Value',handles.chkbox_one2six_value(4))
+set(handles.chkbx_five,'Value',handles.chkbox_one2six_value(5))
+set(handles.chkbx_six,'Value',handles.chkbox_one2six_value(6))
+
+
 
 
 % --- Executes on button press in btn_openfile.
@@ -231,7 +239,10 @@ function chkbx_first_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 
 % Hint: get(hObject,'Value') returns toggle state of chkbx_first
-
+% update绘图选项配置
+handles.chkbox_one2six_value(1)=get(hObject,'Value')
+% Update handles structure
+guidata(hObject, handles);
 
 % --- Executes on button press in chkbx_second.
 function chkbx_second_Callback(hObject, eventdata, handles)
@@ -240,7 +251,10 @@ function chkbx_second_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 
 % Hint: get(hObject,'Value') returns toggle state of chkbx_second
-
+% update绘图选项配置
+handles.chkbox_one2six_value(2)=get(hObject,'Value')
+% Update handles structure
+guidata(hObject, handles);
 
 % --- Executes on button press in chkbx_third.
 function chkbx_third_Callback(hObject, eventdata, handles)
@@ -249,7 +263,10 @@ function chkbx_third_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 
 % Hint: get(hObject,'Value') returns toggle state of chkbx_third
-
+% update绘图选项配置
+handles.chkbox_one2six_value(3)=get(hObject,'Value')
+% Update handles structure
+guidata(hObject, handles);
 
 % --- Executes on button press in chkbx_fourth.
 function chkbx_fourth_Callback(hObject, eventdata, handles)
@@ -258,7 +275,10 @@ function chkbx_fourth_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 
 % Hint: get(hObject,'Value') returns toggle state of chkbx_fourth
-
+% update绘图选项配置
+handles.chkbox_one2six_value(4)=get(hObject,'Value')
+% Update handles structure
+guidata(hObject, handles);
 
 % --- Executes on button press in chkbx_five.
 function chkbx_five_Callback(hObject, eventdata, handles)
@@ -267,108 +287,62 @@ function chkbx_five_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 
 % Hint: get(hObject,'Value') returns toggle state of chkbx_five
+% update绘图选项配置
+handles.chkbox_one2six_value(5)=get(hObject,'Value')
+% Update handles structure
+guidata(hObject, handles);
 
+function chkbx_six_Callback(hObject, eventdata, handles)
+% hObject    handle to chkbx_six (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hint: get(hObject,'Value') returns toggle state of chkbx_six
+% update绘图选项配置
+handles.chkbox_one2six_value(6)=get(hObject,'Value')
+% Update handles structure
+guidata(hObject, handles);
 
 % --- Executes on button press in btn_draw.
 function btn_draw_Callback(hObject, eventdata, handles)
 % hObject    handle to btn_draw (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+% handles.chkbox_one2six_value表示绘图配置，参数表示第一到第六类图是否绘制（0,1）
+%% TODO
 
 
-% --- Executes on button press in checkbox6.
-function checkbox6_Callback(hObject, eventdata, handles)
-% hObject    handle to checkbox6 (see GCBO)
+% --- Executes on button press in chkbx_select_all.
+function chkbx_select_all_Callback(hObject, eventdata, handles)
+% hObject    handle to chkbx_select_all (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
-% Hint: get(hObject,'Value') returns toggle state of checkbox6
+% Hint: get(hObject,'Value') returns toggle state of chkbx_select_all
 
-
-% --- Executes on selection change in listbox_advance.
-function listbox_advance_Callback(hObject, eventdata, handles)
-% hObject    handle to listbox_advance (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-
-% Hints: contents = cellstr(get(hObject,'String')) returns listbox_advance contents as cell array
-%        contents{get(hObject,'Value')} returns selected item from listbox_advance
-
-
-% --- Executes during object creation, after setting all properties.
-function listbox_advance_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to listbox_advance (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    empty - handles not created until after all CreateFcns called
-
-% Hint: listbox controls usually have a white background on Windows.
-%       See ISPC and COMPUTER.
-if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
-    set(hObject,'BackgroundColor','white');
+% --- Executes on button press in chkbx_six.
+if get(hObject,'Value')
+handles.chkbox_one2six_value=[1 1 1 1 1 1]
+set(handles.chkbx_first,'Value',handles.chkbox_one2six_value(1))
+set(handles.chkbx_second,'Value',handles.chkbox_one2six_value(2))
+set(handles.chkbx_third,'Value',handles.chkbox_one2six_value(3))
+set(handles.chkbx_fourth,'Value',handles.chkbox_one2six_value(4))
+set(handles.chkbx_five,'Value',handles.chkbox_one2six_value(5))
+set(handles.chkbx_six,'Value',handles.chkbox_one2six_value(6))
 end
-
-
-% --- Executes on button press in btn_advance_temp.
-function btn_advance_temp_Callback(hObject, eventdata, handles)
-% hObject    handle to btn_advance_temp (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-handles.advanceConfig=~handles.advanceConfig
-visible='Off'
-if handles.advanceConfig
-    visible='On'
-else
-    visible='Off'
-end
-set(handles.uipanel_advance,'Visible',visible)
+% Update handles structure
 guidata(hObject, handles);
 
-% --- Executes on button press in checkbox7.
-function checkbox7_Callback(hObject, eventdata, handles)
-% hObject    handle to checkbox7 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-
-% Hint: get(hObject,'Value') returns toggle state of checkbox7
 
 
-% --- Executes on button press in pushbutton9.
-function pushbutton9_Callback(hObject, eventdata, handles)
-% hObject    handle to pushbutton9 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
 
 
-% --- Executes on button press in pushbutton10.
-function pushbutton10_Callback(hObject, eventdata, handles)
-% hObject    handle to pushbutton10 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
 
 
-% --- Executes on button press in pushbutton11.
-function pushbutton11_Callback(hObject, eventdata, handles)
-% hObject    handle to pushbutton11 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
 
 
-% --- Executes on button press in pushbutton12.
-function pushbutton12_Callback(hObject, eventdata, handles)
-% hObject    handle to pushbutton12 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
 
 
-% --- Executes on button press in pushbutton13.
-function pushbutton13_Callback(hObject, eventdata, handles)
-% hObject    handle to pushbutton13 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
 
 
-% --- Executes on button press in pushbutton14.
-function pushbutton14_Callback(hObject, eventdata, handles)
-% hObject    handle to pushbutton14 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
+
