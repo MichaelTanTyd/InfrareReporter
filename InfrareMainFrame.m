@@ -22,7 +22,7 @@ function varargout = InfrareMainFrame(varargin)
 
 % Edit the above text to modify the response to help InfrareMainFrame
 
-% Last Modified by GUIDE v2.5 28-Feb-2017 21:15:18
+% Last Modified by GUIDE v2.5 28-Feb-2017 22:27:09
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -334,15 +334,24 @@ end
 guidata(hObject, handles);
 
 
+% --------------------------------------------------------------------
+function menu_config_Callback(hObject, eventdata, handles)
+% hObject    handle to menu_config (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
 
 
+% --------------------------------------------------------------------
+function menu_config_modify_Callback(hObject, eventdata, handles)
+% hObject    handle to menu_config_modify (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+data=load('.\config\config.mat');
+old_config=data.config;%copy the old config
+[handle , config]=ParamterConfiguration(old_config)
 
-
-
-
-
-
-
-
-
-
+% --------------------------------------------------------------------
+function Untitled_1_Callback(hObject, eventdata, handles)
+% hObject    handle to Untitled_1 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
