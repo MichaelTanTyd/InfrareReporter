@@ -22,7 +22,7 @@ function varargout = InfrareMainFrame(varargin)
 
 % Edit the above text to modify the response to help InfrareMainFrame
 
-% Last Modified by GUIDE v2.5 22-Feb-2017 22:06:24
+% Last Modified by GUIDE v2.5 28-Feb-2017 09:38:58
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -63,6 +63,8 @@ javaFrame.setFigureIcon(javax.swing.ImageIcon('.\res\BYME_LOGO.jpg'));
 set(gcf,'menu','figure');
 %加载config.mat中的key-value到当前GUI中的appdata中
 initConfigAppData(hObject,'.\config\config.mat')
+
+handles.advanceConfig=0;
 % Update handles structure
 guidata(hObject, handles);
 
@@ -220,3 +222,153 @@ switch lower(method)
         clear figure
     case 'no'
 end
+
+
+% --- Executes on button press in chkbx_first.
+function chkbx_first_Callback(hObject, eventdata, handles)
+% hObject    handle to chkbx_first (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hint: get(hObject,'Value') returns toggle state of chkbx_first
+
+
+% --- Executes on button press in chkbx_second.
+function chkbx_second_Callback(hObject, eventdata, handles)
+% hObject    handle to chkbx_second (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hint: get(hObject,'Value') returns toggle state of chkbx_second
+
+
+% --- Executes on button press in chkbx_third.
+function chkbx_third_Callback(hObject, eventdata, handles)
+% hObject    handle to chkbx_third (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hint: get(hObject,'Value') returns toggle state of chkbx_third
+
+
+% --- Executes on button press in chkbx_fourth.
+function chkbx_fourth_Callback(hObject, eventdata, handles)
+% hObject    handle to chkbx_fourth (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hint: get(hObject,'Value') returns toggle state of chkbx_fourth
+
+
+% --- Executes on button press in chkbx_five.
+function chkbx_five_Callback(hObject, eventdata, handles)
+% hObject    handle to chkbx_five (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hint: get(hObject,'Value') returns toggle state of chkbx_five
+
+
+% --- Executes on button press in btn_draw.
+function btn_draw_Callback(hObject, eventdata, handles)
+% hObject    handle to btn_draw (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+
+% --- Executes on button press in checkbox6.
+function checkbox6_Callback(hObject, eventdata, handles)
+% hObject    handle to checkbox6 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hint: get(hObject,'Value') returns toggle state of checkbox6
+
+
+% --- Executes on selection change in listbox_advance.
+function listbox_advance_Callback(hObject, eventdata, handles)
+% hObject    handle to listbox_advance (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: contents = cellstr(get(hObject,'String')) returns listbox_advance contents as cell array
+%        contents{get(hObject,'Value')} returns selected item from listbox_advance
+
+
+% --- Executes during object creation, after setting all properties.
+function listbox_advance_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to listbox_advance (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: listbox controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+% --- Executes on button press in btn_advance_temp.
+function btn_advance_temp_Callback(hObject, eventdata, handles)
+% hObject    handle to btn_advance_temp (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+handles.advanceConfig=~handles.advanceConfig
+visible='Off'
+if handles.advanceConfig
+    visible='On'
+else
+    visible='Off'
+end
+set(handles.uipanel_advance,'Visible',visible)
+guidata(hObject, handles);
+
+% --- Executes on button press in checkbox7.
+function checkbox7_Callback(hObject, eventdata, handles)
+% hObject    handle to checkbox7 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hint: get(hObject,'Value') returns toggle state of checkbox7
+
+
+% --- Executes on button press in pushbutton9.
+function pushbutton9_Callback(hObject, eventdata, handles)
+% hObject    handle to pushbutton9 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+
+% --- Executes on button press in pushbutton10.
+function pushbutton10_Callback(hObject, eventdata, handles)
+% hObject    handle to pushbutton10 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+
+% --- Executes on button press in pushbutton11.
+function pushbutton11_Callback(hObject, eventdata, handles)
+% hObject    handle to pushbutton11 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+
+% --- Executes on button press in pushbutton12.
+function pushbutton12_Callback(hObject, eventdata, handles)
+% hObject    handle to pushbutton12 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+
+% --- Executes on button press in pushbutton13.
+function pushbutton13_Callback(hObject, eventdata, handles)
+% hObject    handle to pushbutton13 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+
+% --- Executes on button press in pushbutton14.
+function pushbutton14_Callback(hObject, eventdata, handles)
+% hObject    handle to pushbutton14 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
