@@ -22,7 +22,7 @@ function varargout = InfrareMainFrame(varargin)
 
 % Edit the above text to modify the response to help InfrareMainFrame
 
-% Last Modified by GUIDE v2.5 22-Feb-2017 22:06:24
+% Last Modified by GUIDE v2.5 28-Feb-2017 21:15:18
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -63,6 +63,8 @@ javaFrame.setFigureIcon(javax.swing.ImageIcon('.\res\BYME_LOGO.jpg'));
 set(gcf,'menu','figure');
 %加载config.mat中的key-value到当前GUI中的appdata中
 initConfigAppData(hObject,'.\config\config.mat')
+% 从appdata中获取默认绘图选项配置
+handles.chkbox_one2six_value=getappdata(gcf,'defaultDrawingOrder')
 % Update handles structure
 guidata(hObject, handles);
 
@@ -79,7 +81,15 @@ function varargout = InfrareMainFrame_OutputFcn(hObject, eventdata, handles)
 
 % Get default command line output from handles structure
 varargout{1} = handles.output
-% set(gcf,'menu','figure');
+%% 设置默认的绘图选项
+set(handles.chkbx_first,'Value',handles.chkbox_one2six_value(1))
+set(handles.chkbx_second,'Value',handles.chkbox_one2six_value(2))
+set(handles.chkbx_third,'Value',handles.chkbox_one2six_value(3))
+set(handles.chkbx_fourth,'Value',handles.chkbox_one2six_value(4))
+set(handles.chkbx_five,'Value',handles.chkbox_one2six_value(5))
+set(handles.chkbx_six,'Value',handles.chkbox_one2six_value(6))
+
+
 
 
 % --- Executes on button press in btn_openfile.
@@ -220,3 +230,119 @@ switch lower(method)
         clear figure
     case 'no'
 end
+
+
+% --- Executes on button press in chkbx_first.
+function chkbx_first_Callback(hObject, eventdata, handles)
+% hObject    handle to chkbx_first (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hint: get(hObject,'Value') returns toggle state of chkbx_first
+% update绘图选项配置
+handles.chkbox_one2six_value(1)=get(hObject,'Value')
+% Update handles structure
+guidata(hObject, handles);
+
+% --- Executes on button press in chkbx_second.
+function chkbx_second_Callback(hObject, eventdata, handles)
+% hObject    handle to chkbx_second (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hint: get(hObject,'Value') returns toggle state of chkbx_second
+% update绘图选项配置
+handles.chkbox_one2six_value(2)=get(hObject,'Value')
+% Update handles structure
+guidata(hObject, handles);
+
+% --- Executes on button press in chkbx_third.
+function chkbx_third_Callback(hObject, eventdata, handles)
+% hObject    handle to chkbx_third (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hint: get(hObject,'Value') returns toggle state of chkbx_third
+% update绘图选项配置
+handles.chkbox_one2six_value(3)=get(hObject,'Value')
+% Update handles structure
+guidata(hObject, handles);
+
+% --- Executes on button press in chkbx_fourth.
+function chkbx_fourth_Callback(hObject, eventdata, handles)
+% hObject    handle to chkbx_fourth (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hint: get(hObject,'Value') returns toggle state of chkbx_fourth
+% update绘图选项配置
+handles.chkbox_one2six_value(4)=get(hObject,'Value')
+% Update handles structure
+guidata(hObject, handles);
+
+% --- Executes on button press in chkbx_five.
+function chkbx_five_Callback(hObject, eventdata, handles)
+% hObject    handle to chkbx_five (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hint: get(hObject,'Value') returns toggle state of chkbx_five
+% update绘图选项配置
+handles.chkbox_one2six_value(5)=get(hObject,'Value')
+% Update handles structure
+guidata(hObject, handles);
+
+function chkbx_six_Callback(hObject, eventdata, handles)
+% hObject    handle to chkbx_six (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hint: get(hObject,'Value') returns toggle state of chkbx_six
+% update绘图选项配置
+handles.chkbox_one2six_value(6)=get(hObject,'Value')
+% Update handles structure
+guidata(hObject, handles);
+
+% --- Executes on button press in btn_draw.
+function btn_draw_Callback(hObject, eventdata, handles)
+% hObject    handle to btn_draw (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+% handles.chkbox_one2six_value表示绘图配置，参数表示第一到第六类图是否绘制（0,1）
+%% TODO
+
+
+% --- Executes on button press in chkbx_select_all.
+function chkbx_select_all_Callback(hObject, eventdata, handles)
+% hObject    handle to chkbx_select_all (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hint: get(hObject,'Value') returns toggle state of chkbx_select_all
+
+% --- Executes on button press in chkbx_six.
+if get(hObject,'Value')
+handles.chkbox_one2six_value=[1 1 1 1 1 1]
+set(handles.chkbx_first,'Value',handles.chkbox_one2six_value(1))
+set(handles.chkbx_second,'Value',handles.chkbox_one2six_value(2))
+set(handles.chkbx_third,'Value',handles.chkbox_one2six_value(3))
+set(handles.chkbx_fourth,'Value',handles.chkbox_one2six_value(4))
+set(handles.chkbx_five,'Value',handles.chkbox_one2six_value(5))
+set(handles.chkbx_six,'Value',handles.chkbox_one2six_value(6))
+end
+% Update handles structure
+guidata(hObject, handles);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
