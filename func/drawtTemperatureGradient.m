@@ -8,4 +8,6 @@ function [ ] = drawtTemperatureGradient(handle,TG ,opt )
 
 disp('沿高度方向的温度梯度图')
 
+
+
 end
