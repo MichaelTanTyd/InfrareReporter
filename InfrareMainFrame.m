@@ -64,7 +64,7 @@ set(gcf,'menu','figure');
 %加载config.mat中的key-value到当前GUI中的appdata中
 initConfigAppData(hObject,'.\config\config.mat')
 % 从appdata中获取默认绘图选项配置
-handles.chkbox_one2six_value=getappdata(gcf,'defaultDrawingOrder')
+handles.chkbox_one2six_value=str2num(getappdata(gcf,'defaultDrawingOrder'))
 % Update handles structure
 guidata(hObject, handles);
 
@@ -346,12 +346,5 @@ function menu_config_modify_Callback(hObject, eventdata, handles)
 % hObject    handle to menu_config_modify (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-data=load('.\config\config.mat');
-old_config=data.config;%copy the old config
-[handle , config]=ParamterConfiguration(old_config)
+[handle , config]=ParamterConfiguration('InfrareMainFrame',handles.figure1)
 
-% --------------------------------------------------------------------
-function Untitled_1_Callback(hObject, eventdata, handles)
-% hObject    handle to Untitled_1 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)

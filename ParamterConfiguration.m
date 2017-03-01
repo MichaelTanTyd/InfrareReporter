@@ -22,7 +22,7 @@ function varargout = ParamterConfiguration(varargin)
 
 % Edit the above text to modify the response to help ParamterConfiguration
 
-% Last Modified by GUIDE v2.5 28-Feb-2017 22:55:52
+% Last Modified by GUIDE v2.5 01-Mar-2017 13:42:46
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -54,12 +54,25 @@ function ParamterConfiguration_OpeningFcn(hObject, eventdata, handles, varargin)
 
 % Choose default command line output for ParamterConfiguration
 handles.output = hObject;
-handles.new_config={}
+mainGui=find(strcmp(varargin ,'InfrareMainFrame'))
+% 主窗口的句柄
+ret=varargin{mainGui+1}
+if ishandle(ret)
+    handles.main_gui_handle=ret
+else
+    handles.main_gui_handle=-1
+end
+% 加载config的原始配置
+handles.configPath='.\config\config.mat';
+data=load(handles.configPath);
+handles.old_config=data.config;%save the old config
+handles.new_config=handles.old_config ;%先保存old_config
+set(handles.param_table,'Data',handles.old_config)
 % Update handles structure
 guidata(hObject, handles);
 
 % UIWAIT makes ParamterConfiguration wait for user response (see UIRESUME)
-uiwait(handles.figure1);
+uiwait(handles.sub_parameter);
 
 
 % --- Outputs from this function are returned to the command line.
@@ -72,16 +85,43 @@ function varargout = ParamterConfiguration_OutputFcn(hObject, eventdata, handles
 % Get default command line output from handles structure
 varargout{1} = handles.output;
 varargout{2} = handles.new_config;
+delete(hObject);
 
 
-% --- Executes when user attempts to close figure1.
-function figure1_CloseRequestFcn(hObject, eventdata, handles)
-% hObject    handle to figure1 (see GCBO)
+% --- Executes when user attempts to close sub_parameter.
+function sub_parameter_CloseRequestFcn(hObject, eventdata, handles)
+% hObject    handle to sub_parameter (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
 % Hint: delete(hObject) closes the figure
-handles.new_config={'add',2;'dddd',3}
 guidata(hObject, handles);
 uiresume
-delete(hObject);
+
+
+% --- Executes during object creation, after setting all properties.
+function param_table_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to param_table (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+
+
+% --- Executes on button press in btn_reset_default.
+function btn_reset_default_Callback(hObject, eventdata, handles)
+% hObject    handle to btn_reset_default (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+set(handles.param_table,'Data',handles.old_config)
+
+
+% --- Executes on button press in btn_save_change.
+function btn_save_change_Callback(hObject, eventdata, handles)
+% hObject    handle to btn_save_change (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+handles.new_config=get(handles.param_table,'Data')
+config=handles.new_config
+save(handles.configPath,'config');
+guidata(hObject, handles);
+uiresume
