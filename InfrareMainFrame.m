@@ -22,7 +22,7 @@ function varargout = InfrareMainFrame(varargin)
 
 % Edit the above text to modify the response to help InfrareMainFrame
 
-% Last Modified by GUIDE v2.5 28-Feb-2017 21:15:18
+% Last Modified by GUIDE v2.5 28-Feb-2017 22:27:09
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -64,7 +64,7 @@ set(gcf,'menu','figure');
 %加载config.mat中的key-value到当前GUI中的appdata中
 initConfigAppData(hObject,'.\config\config.mat')
 % 从appdata中获取默认绘图选项配置
-handles.chkbox_one2six_value=getappdata(gcf,'defaultDrawingOrder')
+handles.chkbox_one2six_value=str2num(getappdata(gcf,'defaultDrawingOrder'))
 % Update handles structure
 guidata(hObject, handles);
 
@@ -334,15 +334,17 @@ end
 guidata(hObject, handles);
 
 
+% --------------------------------------------------------------------
+function menu_config_Callback(hObject, eventdata, handles)
+% hObject    handle to menu_config (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
 
 
-
-
-
-
-
-
-
-
-
+% --------------------------------------------------------------------
+function menu_config_modify_Callback(hObject, eventdata, handles)
+% hObject    handle to menu_config_modify (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+[handle , config]=ParamterConfiguration('InfrareMainFrame',handles.figure1)
 
