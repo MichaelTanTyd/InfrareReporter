@@ -7,7 +7,7 @@ function [ ] = drawtTemperatureGradient(handle,TG ,opt )
 %   柱状图的颜色是否需要参数？
 
 disp('沿高度方向的温度梯度图')
-
+TG = 
 
 
 end
