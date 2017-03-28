@@ -22,7 +22,7 @@ function varargout = InfrareMainFrame(varargin)
 
 % Edit the above text to modify the response to help InfrareMainFrame
 
-% Last Modified by GUIDE v2.5 28-Feb-2017 22:27:09
+% Last Modified by GUIDE v2.5 23-Mar-2017 22:10:30
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -348,3 +348,35 @@ function menu_config_modify_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 [handle , config]=ParamterConfiguration('InfrareMainFrame',handles.figure1)
 
+
+
+% --- Executes on button press in gongshi1.
+function gongshi1_Callback(hObject, eventdata, handles)
+% hObject    handle to gongshi1 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+prompt = {'匀矿','烧结粉','蛇纹石','白云石','石灰石','生石灰','焦粉','返矿'};
+dlg_title = '试验配料比';
+num_lines = 1;
+defAns = {'63.54', '4.68', '0.42', '2.71', '2.36', '3.90', '3.67','18.72'};
+% answer = inputdlg(prompt,dlg_title,num_lines,defAns,options)
+ shiyanpeibi = inputdlg(prompt,dlg_title,num_lines,defAns);
+% --- Executes on button press in gongshi2.
+function gongshi2_Callback(hObject, eventdata, handles)
+% hObject    handle to gongshi2 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+
+% --- Executes on button press in gongshi3.
+function gongshi3_Callback(hObject, eventdata, handles)
+% hObject    handle to gongshi3 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+
+% --- Executes on button press in gongshijieguo4.
+function gongshijieguo4_Callback(hObject, eventdata, handles)
+% hObject    handle to gongshijieguo4 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
