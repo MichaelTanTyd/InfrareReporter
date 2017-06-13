@@ -1,4 +1,4 @@
-% function [ ] = drawtTemperatureRrend(handle,TG,opt )
+function [ ] = drawtTemperatureRrend(handle,TG,opt )
 %   绘制沿高度方向的温度趋势图
 %   handle:绘制图形的句柄
 %   TG:沿高度方向的温度梯度数据
@@ -10,9 +10,9 @@ disp('沿高度方向的温度趋势图')
 
 %% 需要重新设计画图逻辑 
 % %% 测试数据
-clear
-close all
-clc
+% clear
+% close all
+% clc
 % hight = 3;
 % opt = 'r.-';
 TG_Time(1,:) = [2017, 2, 02, 07, 02, 0 ]; % 时间信息
@@ -66,9 +66,9 @@ set(h,'YTickLabel',t);
 % AX=legend( t2);
 % return
 interval = datenum(0,0,0,Hour,Minute,0);
-x = interval;   
+x = interval;
 % datetick('x','HH:MM'); %需用x作为数组变量
- datetick('x',13); %需用x作为数组变量
+datetick('x',13); %需用x作为数组变量
 xlabel('时间'); ylabel('温度 (kpa)');
 set(gca,'ylim',[0 1500],'ytick',0:100:1500);
 title('不同高度位置在烧结过程中的温度变化趋势')
