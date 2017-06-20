@@ -6,5 +6,6 @@ function [ TS_H_t ] = getHeightOfTopSurfaceVsTime( allData  )
 
 disp('getHeightOfTopSurfaceVsTime')
 
+
 end
 

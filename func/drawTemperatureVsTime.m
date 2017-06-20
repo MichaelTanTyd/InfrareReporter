@@ -36,7 +36,7 @@ TemperatureVsTime = [Time_Data,ImageData];
 % ImageData2 = ImageData;
 
 TG = TemperatureVsTime;
-TG = TG(1:2:end,:);
+% TG = TG(1:2:end,:);
 TempStart = 5;
 Linewidth = 3; % 线条的粗细
 hight = 7;
@@ -63,6 +63,7 @@ legend('H=100cm','H=90cm','H=80cm','H=70cm','H=60cm','H=50cm','H=40cm','H=30cm',
 % x = interval;   
 % datetick('x','HH:MM:SS'); %需用x作为数组变量
 datetick('x',13)
+set(gca,'XTick',interval(1):0.002:interval(end));
 xlabel('时间'); ylabel('温度 (kpa)');
 set(gca,'ylim',[0 1500],'ytick',0:100:1500);
 title('观测窗不同高度位置在烧结过程中的温度变化趋势')
