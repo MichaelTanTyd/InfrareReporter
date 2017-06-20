@@ -1,4 +1,4 @@
-function [ ] = drawtTemperatureRrend(handle,TG,opt )
+% function [ ] = drawtTemperatureRrend(handle,TG,opt )
 %   绘制沿高度方向的温度趋势图
 %   handle:绘制图形的句柄
 %   TG:沿高度方向的温度梯度数据
@@ -15,16 +15,16 @@ disp('沿高度方向的温度趋势图')
 % clc
 % hight = 3;
 % opt = 'r.-';
-TG_Time(1,:) = [2017, 2, 02, 07, 02, 0 ]; % 时间信息
-TG_Time(end+1,:) = [2017, 2, 02, 07, 04, 0] ;
-TG_Time(end+1,:) = [2017, 2, 02, 07, 06, 0] ;
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-TG_GradientData(1,:) = [800 100 100 100 100 100 100 100 100 0 100 100 100 100 100 100 ]; % 有16组数据，数据没有的补0，总的高度为sum(TG_GradientData)
-TG_GradientData(end+1,:) = [700 100 100 100 100 100 100 100 100 100 100 80 70 60 50 20 ]; % % 有16组数据，数据没有的补0，总的高度为sum(TG_GradientData)
-TG_GradientData(end+1,:) = [600 100 100 100 100 100 80 30 30 20 10 10 10 10 10 0 ]; % % 有16组数据，数据没有的补0，总的高度为sum(TG_GradientData)
-
-TG = [TG_Time TG_GradientData];
-
+% TG_Time(1,:) = [2017, 2, 02, 07, 02, 0 ]; % 时间信息
+% TG_Time(end+1,:) = [2017, 2, 02, 07, 04, 0] ;
+% TG_Time(end+1,:) = [2017, 2, 02, 07, 06, 0] ;
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% TG_GradientData(1,:) = [800 100 100 100 100 100 100 100 100 0 100 100 100 100 100 100 ]; % 有16组数据，数据没有的补0，总的高度为sum(TG_GradientData)
+% TG_GradientData(end+1,:) = [700 100 100 100 100 100 100 100 100 100 100 80 70 60 50 20 ]; % % 有16组数据，数据没有的补0，总的高度为sum(TG_GradientData)
+% TG_GradientData(end+1,:) = [600 100 100 100 100 100 80 30 30 20 10 10 10 10 10 0 ]; % % 有16组数据，数据没有的补0，总的高度为sum(TG_GradientData)
+% 
+% TG = [TG_Time TG_GradientData];
+TG = TemperatureVsTime
 
 % return
 BarData = TG(:,7:end);

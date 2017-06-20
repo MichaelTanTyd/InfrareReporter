@@ -1,4 +1,4 @@
-function [ ] = drawTemperatureVsTime(handle)
+% function [ ] = drawTemperatureVsTime(handle)
 %   绘制指定高度序列在时间t上的温度数值
 %   handle:绘制图形的句柄
 %   TG:输入数据，第一列为时间t,第二列为height(1)所对应高度的温度-时间数据，以此类推
@@ -20,7 +20,19 @@ function [ ] = drawTemperatureVsTime(handle)
 % TG(6,:) = [2017, 2, 02, 12, 05, 5, 1, 6 ,1200, 4000, 5, 6, 7, 8, 9] ;%
 %% 作图程序
 addpath(genpath(pwd))
-load('TemperatureVsTimeData.mat')
+% load('TemperatureVsTimeData.mat')
+[data,T,S] = xlsread('温度.xlsx');
+ImageData = data(:,4:end-1);
+TimeData = data(:,1);
+% Time2Matri()
+Time_Data = Time2Matri(TimeData);
+%% 获取TemperatureVsTimeData
+TemperatureVsTime = [Time_Data,ImageData];
+% ImageData2 = ImageData;
+
+
+
+
 TG = TemperatureVsTime;
 TempStart = 5;
 Linewidth = 3; % 线条的粗细

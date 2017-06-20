@@ -376,7 +376,7 @@ function chkbx_select_all_Callback(hObject, eventdata, handles)
 
 % --- Executes on button press in chkbx_six.
 if get(hObject,'Value')
-    handles.chkbox_one2six_value=[1 1 1 1 1 1]
+    handles.chkbox_one2six_value = [1 1 1 1 1 1]
     set(handles.chkbx_first,'Value',handles.chkbox_one2six_value(1))
     set(handles.chkbx_second,'Value',handles.chkbox_one2six_value(2))
     set(handles.chkbx_third,'Value',handles.chkbox_one2six_value(3))

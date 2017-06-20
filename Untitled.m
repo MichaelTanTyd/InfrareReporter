@@ -4,8 +4,8 @@ close all
 addpath(genpath(pwd))
 
 
-[data,T,S] = xlsread('tt1.xlsx');
-ImageData = data(:,4:end);
+[data,T,S] = xlsread('test0620.xlsx');
+ImageData = data(:,4:end-1);
 TimeData = data(:,1);
 % Time2Matri()
 Time_Data = Time2Matri(TimeData);
