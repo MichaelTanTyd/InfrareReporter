@@ -9,18 +9,18 @@ function [ ] =initConfigAppData( handles, configPath)
 %% TODO 
 % 获取config.mat中的key-value,设置到handles中的appdata
 % config.mat中的变量为cell型，名称为config
-data=load(configPath);
-[m n]=size(data.config);
+data = load(configPath);
+[m n] = size(data.config);
 if n~=2
    error('config.mat must be key-value pair, two columns !') 
 end
-for index=1:m
+for index = 1:m
     if isappdata(handles, data.config{index})
-       msgbox(strcat(data.config{index},' is already exist in appdata, will be override!'));
+%        msgbox(strcat(data.config{index},' is already exist in appdata, will be override!'));
     end
     setappdata(handles, data.config{index,1}, data.config{index,2});
 end
-disp('set success')
+% disp('set success')
 
 
 end

@@ -3,7 +3,8 @@ function varargout = InfrareMainFrame(varargin)
 %      INFRAREMAINFRAME, by itself, creates a new INFRAREMAINFRAME or raises the existing
 %      singleton*.
 %
-%      H = INFRAREMAINFRAME returns the handle to a new INFRAREMAINFRAME or the handle to
+%      H = INFRAREMAINFRAME returns the handle to a new INFRAREMAINFRAME or
+%      the handle
 %      the existing singleton*.
 %
 %      INFRAREMAINFRAME('CALLBACK',hObject,eventData,handles,...) calls the local
@@ -22,7 +23,7 @@ function varargout = InfrareMainFrame(varargin)
 
 % Edit the above text to modify the response to help InfrareMainFrame
 
-% Last Modified by GUIDE v2.5 23-Mar-2017 22:10:30
+% Last Modified by GUIDE v2.5 01-Jul-2017 15:01:11
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -53,20 +54,24 @@ function InfrareMainFrame_OpeningFcn(hObject, eventdata, handles, varargin)
 % varargin   command line arguments to InfrareMainFrame (see VARARGIN)
 
 % Choose default command line output for InfrareMainFrame
+clc
 handles.output = hObject;
 % add all the sub path to workspace
 addpath(genpath(pwd));
 % change the logo of figure
 warning off;
 javaFrame = get(hObject, 'JavaFrame');
-javaFrame.setFigureIcon(javax.swing.ImageIcon('.\res\BYME_LOGO.jpg'));
-set(gcf,'menu','figure');
+javaFrame.setFigureIcon(javax.swing.ImageIcon('.\res\BYME_LOGO.jpg')); % 打包的时候有效即可
+% set(gcf,'menu','figure');
 %加载config.mat中的key-value到当前GUI中的appdata中
 initConfigAppData(hObject,'.\config\config.mat')
 % 从appdata中获取默认绘图选项配置
-handles.chkbox_one2six_value=str2num(getappdata(gcf,'defaultDrawingOrder'))
+handles.chkbox_one2six_value = str2num(getappdata(gcf,'defaultDrawingOrder'));
 % Update handles structure
 guidata(hObject, handles);
+
+%　把文件Data里面的数据转存入ProceedData里,在启动的时候处理
+
 
 % UIWAIT makes InfrareMainFrame wait for user response (see UIRESUME)
 % uiwait(handles.figure1);%% uiresume 配对使用 UIWAIT
@@ -80,14 +85,15 @@ function varargout = InfrareMainFrame_OutputFcn(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 
 % Get default command line output from handles structure
-varargout{1} = handles.output
+varargout{1} = handles.output;
 %% 设置默认的绘图选项
-set(handles.chkbx_first,'Value',handles.chkbox_one2six_value(1))
-set(handles.chkbx_second,'Value',handles.chkbox_one2six_value(2))
-set(handles.chkbx_third,'Value',handles.chkbox_one2six_value(3))
-set(handles.chkbx_fourth,'Value',handles.chkbox_one2six_value(4))
-set(handles.chkbx_five,'Value',handles.chkbox_one2six_value(5))
-set(handles.chkbx_six,'Value',handles.chkbox_one2six_value(6))
+set(handles.chkbx_first,'Value',handles.chkbox_one2six_value(1));
+set(handles.chkbx_second,'Value',handles.chkbox_one2six_value(2));
+set(handles.chkbx_third,'Value',handles.chkbox_one2six_value(3));
+set(handles.chkbx_fourth,'Value',handles.chkbox_one2six_value(4));
+set(handles.chkbx_five,'Value',handles.chkbox_one2six_value(5));
+set(handles.chkbx_six,'Value',handles.chkbox_one2six_value(6));
+
 
 
 
@@ -98,76 +104,103 @@ function btn_openfile_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 % 文件打开图 % 跳出文件打开界面
-clear
-[filename, pathname] = uigetfile( ...
-    {  '*.*',  'All Files (*.*)'}, ...
-    'Pick a file');
-% {'*.m;*.fig;*.mat;*.slx;*.mdl',...
-%  'MATLAB Files (*.m,*.fig,*.mat,*.slx,*.mdl)';
-%    '*.m',  'Code files (*.m)'; ...
-%    '*.fig','Figures (*.fig)'; ...
-%    '*.mat','MAT-files (*.mat)'; ...
-%    '*.mdl;*.slx','Models (*.slx, *.mdl)'; ...
-%    '*.*',  'All Files (*.*)'}, ...
-%    'Pick a file');
 
-wh = which(filename);
-if exist(filename, 'file') == 2
-    fprintf('Opening in MATLAB Editor: %s\n', filename);
-    %     edit(filename);
-elseif ~isempty(wh)
-    fprintf('Opening in MATLAB Editor: %s\n', wh);
-    edit(wh);
-else
-    warning('MATLAB:fileNotFound', ...
-        'File was not found: %s', filename);
+% [filename, pathname,] = uigetfile( ...
+%     {  '*.*',  'All Files (*.*)'}, ...
+%     'Pick a file');
+% % {'*.m;*.fig;*.mat;*.slx;*.mdl',...
+% %  'MATLAB Files (*.m,*.fig,*.mat,*.slx,*.mdl)';
+% %    '*.m',  'Code files (*.m)'; ...
+% %    '*.fig','Figures (*.fig)'; ...
+% %    '*.mat','MAT-files (*.mat)'; ...
+% %    '*.mdl;*.slx','Models (*.slx, *.mdl)'; ...
+% %    '*.*',  'All Files (*.*)'}, ...
+% %    'Pick a file');
+
+[filename, pathname, filterindex] = uigetfile( ...
+    {'*.xlsx','EXCEL-files (*.xlsx)'; ...
+    '*.*',  'All Files (*.*)'}, ...
+    'Pick a file', ...
+    'MultiSelect', 'on');
+if iscell(filename) == 0
+    return
 end
 
-fulfile = [ pathname filename];
-global allData
-allData = xlsread(fulfile);
-% 保存在特定的文件夹下
-[data,T,S] = xlsread(fulfile);
-ImageData = data(:,4:end);
-TimeData = data(:,1);
-% Time2Matri()
-Time_Data = Time2Matri(TimeData);
-%% 获取TemperatureVsTimeData
-% TemperatureVsTime = [Time_Data,ImageData];
-ImageData2 = ImageData;
-% 将数据分为10份,Num=10
-Num = 10;
-alllength = size(ImageData2,2);
-Seg = ceil(alllength/Num);
-SgeM = 1:Seg:alllength;
-ImageData3 = [];
-for index = 1:size(ImageData2,1)
-    ImageData3(index,1) = sum(ImageData2(index,SgeM(1):SgeM(2)))/(SgeM(2)-SgeM(1)+1);
-    ImageData3(index,2) = sum(ImageData2(index,SgeM(2):SgeM(3)))/(SgeM(3)-SgeM(2)+1);
-    ImageData3(index,3) = sum(ImageData2(index,SgeM(3):SgeM(4)))/(SgeM(4)-SgeM(3)+1);
-    ImageData3(index,4) = sum(ImageData2(index,SgeM(4):SgeM(5)))/(SgeM(5)-SgeM(4)+1);
-    ImageData3(index,5) = sum(ImageData2(index,SgeM(5):SgeM(6)))/(SgeM(6)-SgeM(5)+1);
-    ImageData3(index,6) = sum(ImageData2(index,SgeM(6):SgeM(7)))/(SgeM(7)-SgeM(6)+1);
+NewFileName = 'ProceedData\'; % 把文件保存到新的文件夹中
+%     NewFileName = 'Data\'; % 把文件保存到新的文件夹中
+for index = 1:size(filename,2)
+    m = filename{1,index};
+    if size(strfind(m,'高度'),1) ~= 0
+        copyfile([pathname,m],[NewFileName,'料位temp.xlsx'])
+    end
+    
+    if size(strfind(m,'温度'),1) ~= 0
+        copyfile([pathname,m],[NewFileName,'温度temp.xlsx'])
+    end
+    
+    if size(strfind(m,'压差'),1) ~= 0
+        copyfile([pathname,m],[NewFileName,'压差temp.xlsx'])
+    end
+    
+    
+    if size(strfind(m,'气体'),1) ~= 0
+        copyfile([pathname,m],[NewFileName,'气体temp.xlsx'])
+        
+    end
+    
+    if size(strfind(m,'红外'),1) ~= 0
+        copyfile([pathname,m],[NewFileName,'图像temp.xlsx'])
+        
+    end
 end
-TemperatureVsTime = [Time_Data,ImageData3];
-% fid = fopen('TemperatureVsTimeData.mat','wt');
-% fprintf(fid,'%g\n',TemperatureVsTime);
-% fclose(fid);
-save ('TemperatureVsTimeData.mat','TemperatureVsTime');
-disp('……')
-disp('完成图像数据处理')
-
 
 
 % --- Executes on button press in btn_generate_reporter.
 function btn_generate_reporter_Callback(hObject, eventdata, handles)
+% 生成报告
 % hObject    handle to btn_generate_reporter (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 %% the code below are used for test ,delete it future
-configData=getappdata(gcf)%get all the appdata of gcf
-setappdata(gcf,'defaultStep',2) %set 'defaultStep' to 2
-resetConfigAppData(gcf,'.\config\config.mat') % update config.mat
+% configData = getappdata(gcf);% get all the appdata of gcf
+% setappdata(gcf,'defaultStep',2) % set 'defaultStep' to 2
+% resetConfigAppData(gcf,'.\config\config.mat') % update config.mat
+folder_name = uigetdir;
+message = '保存相关信息，请等待……';
+set(handles.edit1,'string',message);pause(0.5)
+t = now;
+foldername2 = datestr(t,'yyyymmddTHHMMSS');
+folder = [folder_name,'\','试验Report_',foldername2];
+mkdir(folder)
+oldpathname = 'ProceedData\'; 
+
+name = '\上表面料位变化图.jpg';
+if exist([oldpathname,name]) ~= 0
+    copyfile([oldpathname,name],[folder,name])
+end
+
+name = '\不同高度温暖变化图.jpg';
+if exist([oldpathname,name]) ~= 0
+    copyfile([oldpathname,name],[folder,name])
+end
+name = '\温度变化等级图.jpg';
+if exist([oldpathname,name]) ~= 0
+    copyfile([oldpathname,name],[folder,name])
+end
+name = '\温度变化趋势图.jpg';
+if exist([oldpathname,name]) ~= 0
+    copyfile([oldpathname,name],[folder,name])
+end
+name = '\燃料层迁移趋势图.jpg';
+if exist([oldpathname,name]) ~= 0
+    copyfile([oldpathname,name],[folder,name])
+end
+name = '\负压波动图.jpg';
+if exist([oldpathname,name]) ~= 0
+    copyfile([oldpathname,name],[folder,name])
+end
+message = '保存成功，请查阅';
+set(handles.edit1,'string',message);pause(0.5)
 
 % --- Executes on button press in btn_temperature.
 function btn_temperature_Callback(hObject, eventdata, handles)
@@ -175,24 +208,7 @@ function btn_temperature_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
-global allData
-method = questdlg('要清除上一幅图像吗?','提示','Yes','No','No');
-switch lower(method)
-    case 'yes'
-        clear figure
-    case 'no'
-end
-% 显示图像
-drawTemperatureVsTime(handle)
-% [M, N] = size(allData); % M为列坐标，N为横坐标
-% for index = 1:M
-%     plot(allData(index,4:end)); hold on; grid on;
-% end
-% legendTxt = num2str(allData(:,1));
-% legend(legendTxt,0)
-% xlabel('位置值 Pix ');
-% ylabel('温度值 ℃');
-% title('不同时间段的位置-温度关系图')
+
 
 % --- Executes on button press in btn_height.
 function btn_height_Callback(hObject, eventdata, handles)
@@ -200,57 +216,20 @@ function btn_height_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 % 高度变化图
-global allData
-method = questdlg('要清除上一幅图像吗?','提示','Yes','No','No');
-switch lower(method)
-    case 'yes'
-        clear figure
-    case 'no'
-end
-[M, N] = size(allData); % M为列坐标，N为横坐标
-%% 时间高度关系
-HigChangeData = [];
-for index = 1:M
-    [value, hight] = max(allData(index,4:end));
-    HigChangeData(end+1,1) = allData(index,1);
-    HigChangeData (end,2:3) = [value, hight];
-end
-for index = 1:M
-    plot(HigChangeData(index,2),HigChangeData(index,3),'b.-');hold on
-end
-% legend(legendTxt,0)
-xlabel('时间 ms');
-ylabel('高度 Pix');
-title([num2str(allData(1,1)) '时间高度关系图'])
-
-
-
 
 % --- Executes on button press in btn_shrinkage.
 function btn_shrinkage_Callback(hObject, eventdata, handles)
 % hObject    handle to btn_shrinkage (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-global allData
-method = questdlg('要清除上一幅图像吗?','提示','Yes','No','No');
-switch lower(method)
-    case 'yes'
-        clear figure
-    case 'no'
-end
+
 
 % --- Executes on button press in btn_ladder.
 function btn_ladder_Callback(hObject, eventdata, handles)
 % hObject    handle to btn_ladder (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-global allData
-method = questdlg('要清除上一幅图像吗?','提示','Yes','No','No');
-switch lower(method)
-    case 'yes'
-        clear figure
-    case 'no'
-end
+
 
 
 % --- Executes on button press in chkbx_first.
@@ -261,7 +240,7 @@ function chkbx_first_Callback(hObject, eventdata, handles)
 
 % Hint: get(hObject,'Value') returns toggle state of chkbx_first
 % update绘图选项配置
-handles.chkbox_one2six_value(1)=get(hObject,'Value')
+handles.chkbox_one2six_value(1) = get(hObject,'Value');
 % Update handles structure
 guidata(hObject, handles);
 
@@ -334,36 +313,95 @@ function btn_draw_Callback(hObject, eventdata, handles)
 % close all
 disp 按照要求绘制如下图形
 ImageSelect = handles.chkbox_one2six_value;
+NewFileName = 'ProceedData\'; % 把文件保存到新的文件夹中
 % FigureNum = sum(ImageSelect);
-if ImageSelect(1) == 1
-    figure
+if ImageSelect(1) == 1 % 不同高度温度变化图
+    message = '处理数据信息，请等待……';
+    set(handles.edit1,'string',message);pause(0.5)
+    
+    getTemperatureVsTime;
+    figure('NumberTitle', 'off', 'Name', '不同高度温暖变化图');
     drawTemperatureVsTime,grid on
+    frame = getframe(gcf);im = frame2im(frame);
+    imwrite(im,[NewFileName,'\不同高度温暖变化图.jpg'],'jpg');
+    
+    message = '不同高度温暖变化图';
+    set(handles.edit1,'string',message);
+    
 end
-if ImageSelect(2) == 1
-    figure
-    drawtHeightOfLRAVsTime,grid on % 燃料层迁移趋势图
+
+if ImageSelect(3) == 1 % 上表面料位变化图
+    message = '处理数据信息，请等待……';
+    set(handles.edit1,'string',message);pause(0.5)
+    
+    getHeightOfTopSurfaceVsTime;
+    figure('NumberTitle', 'off', 'Name', '上表面料位变化图');
+    drawtHeightOfTopSurfaceVsTime ,grid on
+    frame = getframe(gcf);im = frame2im(frame);
+    imwrite(im,[NewFileName,'\上表面料位变化图.jpg'],'jpg');
+    
+    
+    message = '完成上表面料位变化图';
+    set(handles.edit1,'string',message);
 end
-if ImageSelect(3) == 1
-    figure
-    drawtHeightOfTopSurfaceVsTime ,grid on% 上表面料位变化图
-end
-if ImageSelect(4) == 1
-    figure
-    drawtTemperatureGradient,grid on
-end
-if ImageSelect(5) == 1
-    figure
-    drawtTemperatureRrend,grid on
-end
-if ImageSelect(6) == 1
-    figure
+
+if ImageSelect(6) == 1  % 负压波动图
+    message = '处理数据信息，请等待……';
+    set(handles.edit1,'string',message);pause(0.5)
+    
+    getPressureVsTime
+    figure('NumberTitle', 'off', 'Name', '负压波动图');
     drawPressureVsTime,grid on
+    frame = getframe(gcf);im = frame2im(frame);
+    imwrite(im,[NewFileName,'\负压波动图.jpg'],'jpg');
+    
+    message = '完成负压波动图';
+    set(handles.edit1,'string',message);
 end
 
+if ImageSelect(2) == 1  % 燃料层迁移趋势图
+    message = '处理数据信息，请等待……';
+    set(handles.edit1,'string',message);pause(0.5)
+    
+    
+    getHeightOfLRAVsTime
+    figure('NumberTitle', 'off', 'Name', '燃料层迁移趋势图');
+    drawtHeightOfLRAVsTime,grid on
+    frame = getframe(gcf);im = frame2im(frame);
+    imwrite(im,[NewFileName,'\燃料层迁移趋势图.jpg'],'jpg');
+    
+    message = '完成燃料层迁移趋势图';
+    set(handles.edit1,'string',message);
+    
+end
 
+if ImageSelect(4) == 1
+    message = '处理数据信息，请等待……';
+    set(handles.edit1,'string',message);pause(0.5)
+    
+    getTemperatureGradient
+    figure('NumberTitle', 'off', 'Name', '温度变化等级图');
+    drawtTemperatureGradient,grid on
+    frame = getframe(gcf);im = frame2im(frame);
+    imwrite(im,[NewFileName,'\温度变化等级图.jpg'],'jpg');
+    
+    message = '完成上温度变化等级图';
+    set(handles.edit1,'string',message);
+end
 
-
-
+if ImageSelect(5) == 1
+    message = '处理数据信息，请等待……';
+    set(handles.edit1,'string',message);pause(0.5)
+    
+    getTemperatureGradient
+    figure('NumberTitle', 'off', 'Name', '温度变化趋势图');
+    drawtTemperatureRrend,grid on
+    frame = getframe(gcf);im = frame2im(frame);
+    imwrite(im,[NewFileName,'\温度变化趋势图.jpg'],'jpg');
+    
+    message = '完成温度变化趋势图';
+    set(handles.edit1,'string',message);
+end
 
 
 % --- Executes on button press in chkbx_select_all.
@@ -376,7 +414,7 @@ function chkbx_select_all_Callback(hObject, eventdata, handles)
 
 % --- Executes on button press in chkbx_six.
 if get(hObject,'Value')
-    handles.chkbox_one2six_value = [1 1 1 1 1 1]
+    handles.chkbox_one2six_value = [1 1 1 1 1 1];
     set(handles.chkbx_first,'Value',handles.chkbox_one2six_value(1))
     set(handles.chkbx_second,'Value',handles.chkbox_one2six_value(2))
     set(handles.chkbx_third,'Value',handles.chkbox_one2six_value(3))
@@ -447,3 +485,47 @@ dlg_title = '烧结试验结果';
 num_lines = 1;
 defAns = {'76.20', '61.10', '24.73', '87.91', '70.49','17.42','80.18','1.55','52.06','55.00','0.93','22.57','78.71','1.52','53.04'};
 shaojiejieguo = inputdlg(prompt,dlg_title,num_lines,defAns);
+
+
+% --- Executes on button press in pushbutton22.
+function pushbutton22_Callback(hObject, eventdata, handles)
+% hObject    handle to pushbutton22 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+
+
+function edit1_Callback(hObject, eventdata, handles)
+% hObject    handle to edit1 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of edit1 as text
+%        str2double(get(hObject,'String')) returns contents of edit1 as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function edit1_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to edit1 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+% --- Executes on button press in pushbutton23.
+function pushbutton23_Callback(hObject, eventdata, handles)
+% hObject    handle to pushbutton23 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+
+% --- Executes on button press in pushbutton24.
+function pushbutton24_Callback(hObject, eventdata, handles)
+% hObject    handle to pushbutton24 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)

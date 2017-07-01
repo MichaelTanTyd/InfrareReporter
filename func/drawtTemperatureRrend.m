@@ -1,77 +1,97 @@
-% function [ ] = drawtTemperatureRrend(handle,TG,opt )
-%   绘制沿高度方向的温度趋势图
+function [ ] = drawtTemperatureRrend(handle,TG,opt )
+
+%   绘制沿高度方向的温度梯度图
 %   handle:绘制图形的句柄
 %   TG:沿高度方向的温度梯度数据
 %   opt:绘图可选参数，比如plot中的'r*',为字符串
 %   可以根据需要添加输入，输出参数，接口中是否需要参数isHoldOn?
 %   柱状图的颜色是否需要参数？
 
-disp('沿高度方向的温度趋势图')
+% % disp('沿高度方向的温度梯度图')
+% % %% 测试数据
+FileName = 'ProceedData';
+load([FileName,'\ImageDataHeightVsTime.mat']);
+TG = ImageDataHeightVsTime;
+TG = TG(1:5:end,:);
 
-%% 需要重新设计画图逻辑 
-% %% 测试数据
-clear
-close all
-clc
-hight = 3;
-opt = 'r.-';
-TG_Time(1,:) = [2017, 2, 02, 07, 02, 0 ]; % 时间信息
-TG_Time(end+1,:) = [2017, 2, 02, 07, 04, 0] ;
-TG_Time(end+1,:) = [2017, 2, 02, 07, 06, 0] ;
-% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-TG_GradientData(1,:) = [800 100 100 100 100 100 100 100 100 0 100 100 100 100 100 100 ]; % 有16组数据，数据没有的补0，总的高度为sum(TG_GradientData)
-TG_GradientData(end+1,:) = [700 100 100 100 100 100 100 100 100 100 100 80 70 60 50 20 ]; % % 有16组数据，数据没有的补0，总的高度为sum(TG_GradientData)
-TG_GradientData(end+1,:) = [600 100 100 100 100 100 80 30 30 20 10 10 10 10 10 0 ]; % % 有16组数据，数据没有的补0，总的高度为sum(TG_GradientData)
+Hour = TG(:,4);
+Minute = TG(:,5);
+Second = TG(:,6);
+interval =datenum(0,0,0,Hour,Minute,Second);
 
-TG = [TG_Time TG_GradientData];
-% TG = TemperatureVsTime
+ImageData2 = TG(:,7:end-1);
+MaxL = size(ImageData2,2);
+ReaL = 800;
 
-% return
-BarData = TG(:,7:end);
+Height1 = TG(:,end);
+for index = 1:size(Height1,1)
+    if Height1(index,1) < 0
+        Height1(index,1) = 0;
+    end
+end
+Height = ReaL-Height1;
+HeihgtPix = round((MaxL-1)/ReaL*Height+1);
 
-Hour = TG(:,4); 
-Minute = TG(:,5);  
-interval = datenum(0,0,0,Hour,Minute,0);
-bar(interval,TG(:,7:end));
-m = bar(BarData,'stacked');
-% m = area(BarData);
-set(m, 'linestyle','none')
-
+%% 标记每个区间的信息
+time = 1;
+m = 1;
 load('map.txt')
+for h = 1:size(ImageData2,1)
+    M = ImageData2(h,1:HeihgtPix(m));
+    m = m +1;  
+    Length = size(M,2);
+    Temp = GetTemp(M,Length);
+    colorMap = map;
+        for index = size(Temp,1):-1:1
+            BarNum = sum(Temp(1:index,2));
+            BarNum = (BarNum-1)*(ReaL-0)/(MaxL-1);  % 像素点转化为料位高度信息       
+            colorMatr = colorMap(Temp(index,1),:);
+            if BarNum ~= 0
+                fill([time-0.5,time-0.5,time+0.5,time+0.5,],[0,BarNum,BarNum,0],colorMatr,'edgealpha',0);hold on
+            end    
+        end      
+        time = time + 1;        
+end
+
 colormap(map)
 colorbar
 
+%% 颜色条信息
 h = colorbar;
-set(h ,'YTick',[0 100 1600]);
+caxis([0,16])
+set(h,'ytick',1:1:16)
 t = get(h,'YTickLabel');
-load('legend.mat')
-
+load('legend.mat') % load进来为t
 set(h,'YTickLabel',t);
-
-% myC= [0 0 1
-%   1 0 0
-%   1 0.4 0
-%   0 0.8 1
-%   0.6 0 1
-%   0 1 0 ];
-% data2D = rand(10,6);
-% H=bar(data2D, 'stack');
-% for k=1:6
-%   set(H(k),'facecolor',myC(k,:))
-% end
-% t2={'>=1500°C';'1400~1499°C '; '1300~1399°C '; '1200~1299°C '; '1100~1199°C '; '1000~1099°C '; '900~999°C '; '800~899°C '; '700~799°C '; '600~699°C '; '500~599°C '; '400~499°C '; '300~399°C '; '200~299°C '; '100~199°C '; '<=99°C '}
-% 数据反了，需要处理下
-
-% AX=legend(h,t2, 'Location','Best','FontSize',8);
-% AX=legend( t2);
-% return
-interval = datenum(0,0,0,Hour,Minute,0);
+%% 横坐标信息
+legend(t)
 x = interval;
-% datetick('x','HH:MM'); %需用x作为数组变量
-datetick('x',13); %需用x作为数组变量
-xlabel('时间'); ylabel('温度 (kpa)');
-set(gca,'ylim',[0 1500],'ytick',0:100:1500);
+datetick('x',15); % 显示到分钟
+
+dt = (interval(end)-interval(1))/100
+set(gca,'XTick',interval(1):0.01:interval(end));
+set(gca,'XTick','13:20');
+Hour = TG(:,4);
+Minute = TG(:,5);
+xtickcell
+bar(rand(39,5),'stacked')
+for index = 1:size(Hour,1)
+    if (Minute(index)) < 10
+        xtickcell{1,index} = [num2str((Hour(index))), ':0', num2str((Minute(index)))];
+    else
+        xtickcell{1,index} = [num2str((Hour(index))), ':', num2str((Minute(index)))];
+    end
+end
+g = (time-1) ;
+set(gca,'xlim',[1 g],'XTick',1:g,'XTickLabel',xtickcell)
+set(get(gca,'XLabel'),'Fontsize',12) 
+set(gca,'XTickLabel',xtickcell)
+%% 纵坐标和标题
+% plot(Height,'r.-');hold on
+xlabel('时间'); ylabel('料位 (mm)');
+set(gca,'ylim',[0 900],'ytick',0:100:900);
+% title('高度方向烧结料在不同采样时刻的温度阶梯分布')
 title('不同高度位置在烧结过程中的温度变化趋势')
-
-
-% end
+scrsz = get(0,'ScreenSize');  % 是为了获得屏幕大小，Screensize是一个4元素向量[left,bottom, width, height]
+set(gcf,'Position',scrsz);    % 用获得的screensize向量设置figure的position属性，实现最大化的目的
+set(gca,'FontSize',13);
