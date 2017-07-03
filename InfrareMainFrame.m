@@ -68,7 +68,7 @@ path=strcat(pwd,'\config\config.mat')
 
 initConfigAppData(hObject,path)
 % 从appdata中获取默认绘图选项配置
-handles.chkbox_one2six_value = str2num(getappdata(gcf,'defaultDrawingOrder'));
+handles.chkbox_one2six_value = str2num(getappdata(gcf,'defaultDrawingOrder')); % 绘图选项
 % Update handles structure
 guidata(hObject, handles);
 
@@ -105,19 +105,6 @@ function btn_openfile_Callback(hObject, eventdata, handles)
 % hObject    handle to btn_openfile (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-% 文件打开图 % 跳出文件打开界面
-
-% [filename, pathname,] = uigetfile( ...
-%     {  '*.*',  'All Files (*.*)'}, ...
-%     'Pick a file');
-% % {'*.m;*.fig;*.mat;*.slx;*.mdl',...
-% %  'MATLAB Files (*.m,*.fig,*.mat,*.slx,*.mdl)';
-% %    '*.m',  'Code files (*.m)'; ...
-% %    '*.fig','Figures (*.fig)'; ...
-% %    '*.mat','MAT-files (*.mat)'; ...
-% %    '*.mdl;*.slx','Models (*.slx, *.mdl)'; ...
-% %    '*.*',  'All Files (*.*)'}, ...
-% %    'Pick a file');
 
 [filename, pathname, filterindex] = uigetfile( ...
     {'*.xlsx','EXCEL-files (*.xlsx)'; ...
@@ -440,8 +427,19 @@ function menu_config_modify_Callback(hObject, eventdata, handles)
 % hObject    handle to menu_config_modify (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-[handle , config]=ParamterConfiguration('InfrareMainFrame',handles.figure1)
-
+% [handle , config]=ParamterConfiguration('InfrareMainFrame',handles.figure1)
+prompt = {'试验高度设置（mm）'};
+dlg_title = '试验实际高度';
+num_lines = 1;
+defAns = {'800'};
+RealHeight = inputdlg(prompt,dlg_title,num_lines,defAns);
+if size(RealHeight,1) == 0
+    RealHeight =defAns(1);
+else
+    RealHeight =RealHeight(1);
+end
+% RealHeight
+save(['config', '\RealHeight.mat'],'RealHeight');
 
 
 % --- Executes on button press in gongshi1.
@@ -494,7 +492,8 @@ function pushbutton22_Callback(hObject, eventdata, handles)
 % hObject    handle to pushbutton22 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-
+filename = 'help\软件使用说明-20170702V1.pdf';%被选中的条目对应的字符串值
+open(filename);
 
 
 function edit1_Callback(hObject, eventdata, handles)

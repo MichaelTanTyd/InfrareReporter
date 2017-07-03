@@ -6,14 +6,8 @@ for index = 2:size(T,1)
     Temp = T{index,3};
     ROILineInfor(end+1,:) = str2num(Temp(5:end));
 end
-
-for index = 100:-1:1 % 最多的ROIline的数量在100条
-    ROILineNum = find(ROILineInfor == index);
-    if size(ROILineNum) ~= 0
-        ROILineNum = index;
-        break
-    end
-end
+b = unique( ROILineInfor);
+ROILineNum = size(b,2);
 
 %% 获取有效的信息数据和时间数据
 ImageData = data(:,4:end);

@@ -11,11 +11,15 @@ function [ ] = drawtTemperatureGradient(handle,TG ,opt )
 % 
 % disp('沿高度方向的温度梯度图')
 %% 测试数据
+FileName = 'config';
+load([FileName,'\RealHeight.mat']);
+ReaL = RealHeight{1};%  实际测
+ReaL = str2num(ReaL);
 
 FileName = 'ProceedData';
 load([FileName,'\ImageDataHeightVsTime.mat']);
 TG = ImageDataHeightVsTime;
-ReaL = 800;
+% ReaL = 800;
 
 BarNumber = 20;
 DN = floor(size(TG,1)/BarNumber);
@@ -67,7 +71,10 @@ load('map.txt')
 colormap(map)
 colorbar
 %% 颜色条信息
+%% 颜色条信息
 h = colorbar;
+caxis([0,16])
+set(h,'ytick',1:1:16)
 t = get(h,'YTickLabel');
 load('legend.mat') % load进来为t
 set(h,'YTickLabel',t);

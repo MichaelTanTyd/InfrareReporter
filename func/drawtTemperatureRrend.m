@@ -9,11 +9,17 @@ function [ ] = drawtTemperatureRrend(handle,TG,opt )
 
 % % disp('沿高度方向的温度梯度图')
 % % %% 测试数据
+FileName = 'config';
+load([FileName,'\RealHeight.mat']);
+ReaL = RealHeight{1};%  实际测
+ReaL = str2num(ReaL);
+
+
 FileName = 'ProceedData';
 load([FileName,'\ImageDataHeightVsTime.mat']);
 TG = ImageDataHeightVsTime;
 TG = TG(1:5:end,:);
-
+% TG = TG(1:10:end,:);
 Hour = TG(:,4);
 Minute = TG(:,5);
 Second = TG(:,6);
@@ -21,7 +27,7 @@ interval =datenum(0,0,0,Hour,Minute,Second);
 
 ImageData2 = TG(:,7:end-1);
 MaxL = size(ImageData2,2);
-ReaL = 800;
+% ReaL = 800;
 
 Height1 = TG(:,end);
 for index = 1:size(Height1,1)
@@ -64,17 +70,16 @@ t = get(h,'YTickLabel');
 load('legend.mat') % load进来为t
 set(h,'YTickLabel',t);
 %% 横坐标信息
-legend(t)
-x = interval;
 datetick('x',15); % 显示到分钟
 
-dt = (interval(end)-interval(1))/100
-set(gca,'XTick',interval(1):0.01:interval(end));
-set(gca,'XTick','13:20');
+% dt = (interval(end)-interval(1))/100
+% OneMiniut = 1.1574*10^(-5); 
+% interNum = 10*60*OneMiniut;
+% set(gca,'XTick',interval(1):interNum:interval(end));
+
 Hour = TG(:,4);
 Minute = TG(:,5);
-xtickcell
-bar(rand(39,5),'stacked')
+xtickcell = [];
 for index = 1:size(Hour,1)
     if (Minute(index)) < 10
         xtickcell{1,index} = [num2str((Hour(index))), ':0', num2str((Minute(index)))];
@@ -82,6 +87,16 @@ for index = 1:size(Hour,1)
         xtickcell{1,index} = [num2str((Hour(index))), ':', num2str((Minute(index)))];
     end
 end
+
+TimeTicNum = floor(size(xtickcell,2)/10);
+xtickcell2 = cell(1,size(xtickcell,2));
+for index = 1:TimeTicNum:size(xtickcell,2)
+    xtickcel2{1,index} = xtickcell{1,index};
+end
+xtickcell = xtickcel2;
+
+
+
 g = (time-1) ;
 set(gca,'xlim',[1 g],'XTick',1:g,'XTickLabel',xtickcell)
 set(get(gca,'XLabel'),'Fontsize',12) 
@@ -91,6 +106,7 @@ set(gca,'XTickLabel',xtickcell)
 xlabel('时间'); ylabel('料位 (mm)');
 set(gca,'ylim',[0 900],'ytick',0:100:900);
 % title('高度方向烧结料在不同采样时刻的温度阶梯分布')
+ set(gca,'ticklength',[0 0])
 title('不同高度位置在烧结过程中的温度变化趋势')
 scrsz = get(0,'ScreenSize');  % 是为了获得屏幕大小，Screensize是一个4元素向量[left,bottom, width, height]
 set(gcf,'Position',scrsz);    % 用获得的screensize向量设置figure的position属性，实现最大化的目的
