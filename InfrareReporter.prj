@@ -1,5 +1,5 @@
 <deployment-project plugin="plugin.ezdeploy" plugin-version="1.0">
-  <configuration build-checksum="120363497" file="D:\InfrareReporter\InfrareReporter.prj" location="D:\InfrareReporter" name="InfrareReporter" preferred-package-location="D:\InfrareReporter\Package\for_redistribution" preferred-package-type="package.type.exe" target="target.ezdeploy.standalone" target-name="Application Compiler">
+  <configuration build-checksum="3995598109" file="D:\InfrareReporter\InfrareReporter.prj" location="D:\InfrareReporter" name="InfrareReporter" preferred-package-location="D:\InfrareReporter\Package\for_redistribution" preferred-package-type="package.type.exe" target="target.ezdeploy.standalone" target-name="Application Compiler">
     <param.appname>InfrareReporter</param.appname>
     <param.icon />
     <param.icons />

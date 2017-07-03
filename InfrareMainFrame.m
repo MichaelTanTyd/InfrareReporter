@@ -64,7 +64,8 @@ javaFrame = get(hObject, 'JavaFrame');
 javaFrame.setFigureIcon(javax.swing.ImageIcon('.\res\BYME_LOGO.jpg')); % 打包的时候有效即可
 % set(gcf,'menu','figure');
 %加载config.mat中的key-value到当前GUI中的appdata中
-initConfigAppData(hObject,'.\config\config.mat')
+path=strcat(pwd,'\config\config.mat')
+initConfigAppData(hObject,path)
 % 从appdata中获取默认绘图选项配置
 handles.chkbox_one2six_value = str2num(getappdata(gcf,'defaultDrawingOrder')); % 绘图选项
 % Update handles structure
