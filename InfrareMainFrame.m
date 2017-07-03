@@ -66,7 +66,7 @@ javaFrame.setFigureIcon(javax.swing.ImageIcon('.\res\BYME_LOGO.jpg')); % ´ò°üµÄÊ
 %¼ÓÔØconfig.matÖĞµÄkey-valueµ½µ±Ç°GUIÖĞµÄappdataÖĞ
 initConfigAppData(hObject,'.\config\config.mat')
 % ´ÓappdataÖĞ»ñÈ¡Ä¬ÈÏ»æÍ¼Ñ¡ÏîÅäÖÃ
-handles.chkbox_one2six_value = str2num(getappdata(gcf,'defaultDrawingOrder'));
+handles.chkbox_one2six_value = str2num(getappdata(gcf,'defaultDrawingOrder')); % »æÍ¼Ñ¡Ïî
 % Update handles structure
 guidata(hObject, handles);
 
@@ -103,19 +103,6 @@ function btn_openfile_Callback(hObject, eventdata, handles)
 % hObject    handle to btn_openfile (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-% ÎÄ¼ş´ò¿ªÍ¼ % Ìø³öÎÄ¼ş´ò¿ª½çÃæ
-
-% [filename, pathname,] = uigetfile( ...
-%     {  '*.*',  'All Files (*.*)'}, ...
-%     'Pick a file');
-% % {'*.m;*.fig;*.mat;*.slx;*.mdl',...
-% %  'MATLAB Files (*.m,*.fig,*.mat,*.slx,*.mdl)';
-% %    '*.m',  'Code files (*.m)'; ...
-% %    '*.fig','Figures (*.fig)'; ...
-% %    '*.mat','MAT-files (*.mat)'; ...
-% %    '*.mdl;*.slx','Models (*.slx, *.mdl)'; ...
-% %    '*.*',  'All Files (*.*)'}, ...
-% %    'Pick a file');
 
 [filename, pathname, filterindex] = uigetfile( ...
     {'*.xlsx','EXCEL-files (*.xlsx)'; ...
@@ -438,8 +425,19 @@ function menu_config_modify_Callback(hObject, eventdata, handles)
 % hObject    handle to menu_config_modify (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-[handle , config]=ParamterConfiguration('InfrareMainFrame',handles.figure1)
-
+% [handle , config]=ParamterConfiguration('InfrareMainFrame',handles.figure1)
+prompt = {'ÊÔÑé¸ß¶ÈÉèÖÃ£¨mm£©'};
+dlg_title = 'ÊÔÑéÊµ¼Ê¸ß¶È';
+num_lines = 1;
+defAns = {'800'};
+RealHeight = inputdlg(prompt,dlg_title,num_lines,defAns);
+if size(RealHeight,1) == 0
+    RealHeight =defAns(1);
+else
+    RealHeight =RealHeight(1);
+end
+% RealHeight
+save(['config', '\RealHeight.mat'],'RealHeight');
 
 
 % --- Executes on button press in gongshi1.
@@ -492,7 +490,8 @@ function pushbutton22_Callback(hObject, eventdata, handles)
 % hObject    handle to pushbutton22 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-
+filename = 'help\Èí¼şÊ¹ÓÃËµÃ÷-20170702V1.pdf';%±»Ñ¡ÖĞµÄÌõÄ¿¶ÔÓ¦µÄ×Ö·û´®Öµ
+open(filename);
 
 
 function edit1_Callback(hObject, eventdata, handles)

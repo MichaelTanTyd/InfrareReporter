@@ -5,8 +5,11 @@ function [ ] = drawtHeightOfLRAVsTime(handle,LRA_H_t,opt )
 %   LRA_H_t最后一列为赤红带的高度位置，需要转化为mm的单位，pixelToHeight函数实现
 %   opt:绘图可选参数，比如plot中的'r*',为字符串
 %   可以根据需要添加输入，输出参数，接口中是否需要参数isHoldOn?
+FileName = 'config';
+load([FileName,'\RealHeight.mat']);
+ReaL = RealHeight{1};%  实际测
+ReaL = str2num(ReaL);
 
-ReaL = 800;%  实际测试的长度
 FileName = 'ProceedData';
 load([FileName,'\ImageDataVsTime.mat']);
 ImageData = ImageDataVsTime(:,7:end);
