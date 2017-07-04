@@ -300,18 +300,30 @@ function btn_draw_Callback(hObject, eventdata, handles)
 %% TODO 绘图函数
 % close all
 disp 按照要求绘制如下图形
+log={'initial drawing';'begning drawing'};
 ImageSelect = handles.chkbox_one2six_value;
 NewFileName = 'ProceedData\'; % 把文件保存到新的文件夹中
 % FigureNum = sum(ImageSelect);
 if ImageSelect(1) == 1 % 不同高度温度变化图
+    log{end+1}='不同高度温度变化图';
     message = '处理数据信息，请等待……';
     set(handles.edit1,'string',message);pause(0.5)
     
     getTemperatureVsTime;
+    message = 'debug 1……';
+    set(handles.edit1,'string',message);pause(0.5)
     figure('NumberTitle', 'off', 'Name', '不同高度温暖变化图');
+    message = 'debug 2……';
+    set(handles.edit1,'string',message);pause(0.5)
     drawTemperatureVsTime,grid on
+    message = 'debug 3……';
+    set(handles.edit1,'string',message);pause(0.5)
     frame = getframe(gcf);im = frame2im(frame);
+    message = 'debug 4……';
+    set(handles.edit1,'string',message);pause(0.5)
     imwrite(im,[NewFileName,'\不同高度温暖变化图.jpg'],'jpg');
+    message = 'debug 5……';
+    set(handles.edit1,'string',message);pause(0.5)
     
     message = '不同高度温暖变化图';
     set(handles.edit1,'string',message);
@@ -320,6 +332,7 @@ end
 
 if ImageSelect(3) == 1 % 上表面料位变化图
     message = '处理数据信息，请等待……';
+        log{end+1}='上表面料位变化图';
     set(handles.edit1,'string',message);pause(0.5)
     
     getHeightOfTopSurfaceVsTime;
@@ -335,6 +348,7 @@ end
 
 if ImageSelect(6) == 1  % 负压波动图
     message = '处理数据信息，请等待……';
+    log{end+1}='负压波动图';
     set(handles.edit1,'string',message);pause(0.5)
     
     getPressureVsTime
@@ -349,6 +363,7 @@ end
 
 if ImageSelect(2) == 1  % 燃料层迁移趋势图
     message = '处理数据信息，请等待……';
+    log{end+1}='燃料层迁移趋势图';
     set(handles.edit1,'string',message);pause(0.5)
     
     
@@ -365,6 +380,7 @@ end
 
 if ImageSelect(4) == 1
     message = '处理数据信息，请等待……';
+    log{end+1}='温度变化等级图';
     set(handles.edit1,'string',message);pause(0.5)
     
     getTemperatureGradient
@@ -380,7 +396,7 @@ end
 if ImageSelect(5) == 1
     message = '处理数据信息，请等待……';
     set(handles.edit1,'string',message);pause(0.5)
-    
+    log{end+1}='温度变化趋势图';
     getTemperatureGradient
     figure('NumberTitle', 'off', 'Name', '温度变化趋势图');
     drawtTemperatureRrend,grid on
@@ -389,7 +405,10 @@ if ImageSelect(5) == 1
     
     message = '完成温度变化趋势图';
     set(handles.edit1,'string',message);
+   log{end+1}='end drawing this time';
+
 end
+   save('D:\log','log');
 
 
 % --- Executes on button press in chkbx_select_all.

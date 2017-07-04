@@ -1,5 +1,5 @@
 <deployment-project plugin="plugin.ezdeploy" plugin-version="1.0">
-  <configuration build-checksum="3995598109" file="D:\InfrareReporter\InfrareReporter.prj" location="D:\InfrareReporter" name="InfrareReporter" preferred-package-location="D:\InfrareReporter\Package\for_redistribution" preferred-package-type="package.type.exe" target="target.ezdeploy.standalone" target-name="Application Compiler">
+  <configuration build-checksum="792502215" file="D:\InfrareReporter\InfrareReporter.prj" location="D:\InfrareReporter" name="InfrareReporter" preferred-package-location="D:\InfrareReporter\Package\for_redistribution" preferred-package-type="package.type.exe" target="target.ezdeploy.standalone" target-name="Application Compiler">
     <param.appname>InfrareReporter</param.appname>
     <param.icon />
     <param.icons />
@@ -9,7 +9,7 @@
     <param.company>BYME</param.company>
     <param.summary>基于红外摄像仪的矿物烧结过程分析平台</param.summary>
     <param.description>基于红外摄像仪的矿物烧结过程分析平台</param.description>
-    <param.screenshot />
+    <param.screenshot>${PROJECT_ROOT}\res\screen_logo.jpg</param.screenshot>
     <param.guid />
     <param.installpath.string>\BYME\InfrareReporter\</param.installpath.string>
     <param.installpath.combo>option.installpath.programfiles</param.installpath.combo>
@@ -38,7 +38,6 @@
       <param.icon />
       <param.icons />
       <param.version />
-      <param.screenshot />
       <param.guid />
       <param.installpath.string />
       <param.installpath.combo />
