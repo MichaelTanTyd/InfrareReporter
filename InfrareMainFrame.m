@@ -23,7 +23,7 @@ function varargout = InfrareMainFrame(varargin)
 
 % Edit the above text to modify the response to help InfrareMainFrame
 
-% Last Modified by GUIDE v2.5 01-Jul-2017 15:01:11
+% Last Modified by GUIDE v2.5 15-Oct-2018 09:05:30
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -546,5 +546,19 @@ function pushbutton23_Callback(hObject, eventdata, handles)
 % --- Executes on button press in pushbutton24.
 function pushbutton24_Callback(hObject, eventdata, handles)
 % hObject    handle to pushbutton24 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+
+% --------------------------------------------------------------------
+function formula_process_Callback(hObject, eventdata, handles)
+% hObject    handle to formula_process (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+
+% --------------------------------------------------------------------
+function formula_panel_Callback(hObject, eventdata, handles)
+% hObject    handle to formula_panel (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
