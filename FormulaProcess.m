@@ -22,7 +22,7 @@ function varargout = FormulaProcess(varargin)
 
 % Edit the above text to modify the response to help FormulaProcess
 
-% Last Modified by GUIDE v2.5 05-Nov-2018 14:25:58
+% Last Modified by GUIDE v2.5 07-Nov-2018 09:58:27
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -232,22 +232,24 @@ function BtnRecipe_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 %% 配比数据排列顺序
-% f.WriteLine(CStr(HMIRuntime.Tags("sjsyjg_sjkMS").Read))
-% f.WriteLine(CStr(HMIRuntime.Tags("zlcs_hhlpjld").Read))
-% f.WriteLine(CStr(HMIRuntime.Tags("zlcs_lchd").Read))
-% f.WriteLine(CStr(HMIRuntime.Tags("zlcs_glzrl").Read))
-% f.WriteLine(CStr(HMIRuntime.Tags("zlcs_gzlmd").Read))
-% f.WriteLine(CStr(HMIRuntime.Tags("syplb_bys").Read))
-% f.WriteLine(CStr(HMIRuntime.Tags("syplb_shs").Read))
-% f.WriteLine(CStr(HMIRuntime.Tags("syplb_jf").Read))
-% f.WriteLine(CStr(HMIRuntime.Tags("syplb_jk").Read))
-% f.WriteLine(CStr(HMIRuntime.Tags("sjsyjg_pkl").Read))
+% f.WriteLine(CStr(HMIRuntime.Tags("sjsyjg_sjkMS").Read))'1
+% f.WriteLine(CStr(HMIRuntime.Tags("zlcs_hhlpjld").Read))'2
+% f.WriteLine(CStr(HMIRuntime.Tags("zlcs_lchd").Read))'3
+% f.WriteLine(CStr(HMIRuntime.Tags("zlcs_glzrl").Read))'4
+% f.WriteLine(CStr(HMIRuntime.Tags("zlcs_gzlmd").Read))'5
+% f.WriteLine(CStr(HMIRuntime.Tags("syplb_bys").Read))'6
+% f.WriteLine(CStr(HMIRuntime.Tags("syplb_shs").Read))'7
+% f.WriteLine(CStr(HMIRuntime.Tags("syplb_jf").Read))'8
+% f.WriteLine(CStr(HMIRuntime.Tags("syplb_jk").Read))'9
+% f.WriteLine(CStr(HMIRuntime.Tags("1#out_air_press_sv").Read))'10 烧结负压
 % 
-% f.WriteLine(CStr(HMIRuntime.Tags("CO2含量").Read))
-% f.WriteLine(CStr(HMIRuntime.Tags("混合料真密度").Read))
-% f.WriteLine(CStr(HMIRuntime.Tags("焦粉视密度").Read))
-% f.WriteLine(CStr(HMIRuntime.Tags("匀矿视密度").Read))
-% f.WriteLine(CStr(HMIRuntime.Tags("脱水收缩系数").Read))
+% 
+% f.WriteLine(CStr(HMIRuntime.Tags("CO2含量").Read))'11
+% f.WriteLine(CStr(HMIRuntime.Tags("混合料真密度").Read))'12
+% f.WriteLine(CStr(HMIRuntime.Tags("焦粉视密度").Read))'13
+% f.WriteLine(CStr(HMIRuntime.Tags("匀矿视密度").Read))'14
+% f.WriteLine(CStr(HMIRuntime.Tags("脱水收缩系数").Read))'15
+% f.WriteLine(CStr(HMIRuntime.Tags("sjsyjg_pkl").Read))'16
 
 
 [fileName,pathName]=uigetfile('*.txt','Select Input file')
@@ -492,9 +494,9 @@ function BtnOriginPorosity_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 OreRecipt=handles.OreRecipt
-gzlmd=OreRecipt(5)
+pkl=OreRecipt(16)
 hhlzmd=OreRecipt(12)
-yskxl=1-gzlmd/hhlzmd
+yskxl=1-pkl/hhlzmd
 set(handles.kongxilv,'String',num2str(yskxl)); 
 global msg 
 msg{end+1}='混合料原始孔隙率计算完成'
